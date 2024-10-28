@@ -1,14 +1,14 @@
-package com.dam2.appretoandroid.ui.notifications;
+package com.dam2.appretoandroid.ui.galeria;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class GaleriaViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public GaleriaViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is notifications fragment");
     }

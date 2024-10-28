@@ -3,23 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_servicios">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.dam2.appretoandroid.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_servicios"
+        android:name="com.dam2.appretoandroid.ui.servicios.ServiciosFragment"
+        android:label="@string/title_servicios"
+        tools:layout="@layout/fragment_servicios" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.dam2.appretoandroid.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_mapa"
+        android:name="com.dam2.appretoandroid.ui.mapa.MapaFragment"
+        android:label="@string/title_mapa"
+        tools:layout="@layout/fragment_mapa" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.dam2.appretoandroid.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_galeria"
+        android:name="com.dam2.appretoandroid.ui.galeria.GaleriaFragment"
+        android:label="@string/title_galeria"
+        tools:layout="@layout/fragment_galeria" />
+    <fragment
+        android:id="@+id/navigation_historia"
+        android:name="com.dam2.appretoandroid.ui.historia.HistoriaFragment"
+        android:label="@string/title_historia"
+        tools:layout="@layout/fragment_historia" />
 </navigation>
