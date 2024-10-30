@@ -14,6 +14,9 @@ lifecycleViewmodelKtx = "2.8.6"
 navigationFragment = "2.8.3"
 navigationUi = "2.8.3"
 legacySupportV4 = "1.0.0"
+playServicesMaps = "19.0.0"
+secretsGradlePlugin = "2.0.1"
+viewpager2 = "1.1.0"
 volley = "1.2.1"
 
 [libraries]
@@ -31,6 +34,9 @@ lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-view
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 volley = { module = "com.android.volley:volley", version.ref = "volley" }
 
 [plugins]

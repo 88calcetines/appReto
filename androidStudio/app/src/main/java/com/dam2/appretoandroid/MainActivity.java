@@ -1,10 +1,18 @@
 package com.dam2.appretoandroid;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.app.appsearch.SearchResults;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Menu;
+import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.KeyEventDispatcher;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -34,4 +44,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        SearchManager searchManager= (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        ComponentName component= new ComponentName(this, SearchResults.class);
+        SearchableInfo searchableInfo=searchManager.getSearchableInfo(component);
+        searchView.setSearchableInfo(searchableInfo);
+        return true;
+    }
 }

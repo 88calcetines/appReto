@@ -47,6 +47,7 @@ public class ServiciosFragment extends Fragment {
 
         viewPager=view.findViewById(R.id.pager);
         viewPagerAdapter=new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
         TabLayout tabLayout=view.findViewById(R.id.tab_layout);
 
         new TabLayoutMediator(tabLayout,viewPager,(tab, position) -> tab.setText(nombreTab[position])).attach();

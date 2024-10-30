@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.dam2.appretoandroid.ui.servicios.CestaFragment;
 import com.dam2.appretoandroid.ui.servicios.ConsolasFragment;
 import com.dam2.appretoandroid.ui.servicios.DevicesFragment;
 import com.dam2.appretoandroid.ui.servicios.ServiciosFragment;
@@ -44,6 +45,13 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 bundleDevices.putInt(DevicesFragment.ARG_OBJECT, position+1);
                 bundleDevices.putString("nombreTag", "Devices");
                 fragment.setArguments(bundleDevices);
+                break;
+            case 3:
+                fragment = new CestaFragment();
+                Bundle bundleCesta= new Bundle();
+                bundleCesta.putInt(CestaFragment.ARG_OBJECT, position+1);
+                bundleCesta.putString("nombreTag", "Cesta");
+                fragment.setArguments(bundleCesta);
                 break;
 
 
