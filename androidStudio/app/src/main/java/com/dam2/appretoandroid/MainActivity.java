@@ -7,12 +7,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.SearchView;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.KeyEventDispatcher;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,6 +26,8 @@ import com.dam2.appretoandroid.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private SharedViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +47,27 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         SearchManager searchManager= (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
+        SearchView searchView =(SearchView) menu.findItem(R.id.search).getActionView();
+        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        //viewModel.setSearchView(searchView);
+        MenuItem menuItem=menu.findItem(R.id.search);
+        viewModel.setMenuItem(menuItem);
+
         ComponentName component= new ComponentName(this, SearchResults.class);
+
         SearchableInfo searchableInfo=searchManager.getSearchableInfo(component);
         searchView.setSearchableInfo(searchableInfo);
         return true;
     }
+
 }

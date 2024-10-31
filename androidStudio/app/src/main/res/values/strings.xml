@@ -7,4 +7,5 @@
     <string name="title_mapa">Mapa</string>
     <string name="title_galeria">Galeria</string>
     <string name="title_historia">Historia</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
 </resources>

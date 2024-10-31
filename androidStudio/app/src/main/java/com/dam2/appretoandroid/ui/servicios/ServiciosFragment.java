@@ -2,6 +2,7 @@ package com.dam2.appretoandroid.ui.servicios;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -9,10 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.dam2.appretoandroid.R;
+import com.dam2.appretoandroid.SharedViewModel;
 import com.dam2.appretoandroid.adapters.ViewPagerAdapter;
 import com.dam2.appretoandroid.databinding.FragmentServiciosBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -24,6 +27,7 @@ public class ServiciosFragment extends Fragment {
     private ViewPager2 viewPager;
     private String[] nombreTab=new String[4];
     private ViewPagerAdapter viewPagerAdapter;
+    private SharedViewModel sharedViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class ServiciosFragment extends Fragment {
         binding = FragmentServiciosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        enableSearch(true);
         return root;
     }
 
@@ -57,5 +61,16 @@ public class ServiciosFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    private void enableSearch(boolean state)
+    {
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.getMenuItem().observe(getViewLifecycleOwner(), new Observer<MenuItem>() {
+            @Override
+            public void onChanged(MenuItem menuItem) {
+                menuItem.setVisible(state);
+            }
+        });
+
     }
 }

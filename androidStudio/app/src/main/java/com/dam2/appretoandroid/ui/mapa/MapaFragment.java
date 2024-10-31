@@ -3,16 +3,20 @@ package com.dam2.appretoandroid.ui.mapa;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.dam2.appretoandroid.R;
+import com.dam2.appretoandroid.SharedViewModel;
 import com.dam2.appretoandroid.databinding.FragmentMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +30,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private FragmentMapaBinding binding;
     private Context mContext;
     private GoogleMap gMap;
+    private SharedViewModel sharedViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,6 +40,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         binding = FragmentMapaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        enableSearch(false);
+
 
 
         return root;
@@ -73,5 +82,17 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 .title("Almi"));
         gMap.moveCamera(CameraUpdateFactory.newLatLng(almi));
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(almi,18));
+    }
+
+    private void enableSearch(boolean state)
+    {
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.getMenuItem().observe(getViewLifecycleOwner(), new Observer<MenuItem>() {
+            @Override
+            public void onChanged(MenuItem menuItem) {
+                menuItem.setVisible(state);
+            }
+        });
+
     }
 }
