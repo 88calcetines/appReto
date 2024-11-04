@@ -12,7 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowSplashScreenBackground">@color/maindark</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/file</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/icon</item>
 
 
         <!-- Customize your theme here. -->

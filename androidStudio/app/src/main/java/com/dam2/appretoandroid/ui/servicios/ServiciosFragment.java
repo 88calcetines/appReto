@@ -1,6 +1,7 @@
 package com.dam2.appretoandroid.ui.servicios;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +45,8 @@ public class ServiciosFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        nombreTab[0]="VideoJuegos";
-        nombreTab[1]="Consoloas";
+        nombreTab[0]="Videojuegos";
+        nombreTab[1]="Consolas";
         nombreTab[2]="Smartphones Tablets";
         nombreTab[3]="Cesta";
 
@@ -55,6 +56,14 @@ public class ServiciosFragment extends Fragment {
         TabLayout tabLayout=view.findViewById(R.id.tab_layout);
 
         new TabLayoutMediator(tabLayout,viewPager,(tab, position) -> tab.setText(nombreTab[position])).attach();
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                onTabChanged(position);
+            }
+        });
     }
 
     @Override
@@ -72,5 +81,27 @@ public class ServiciosFragment extends Fragment {
             }
         });
 
+    }
+    private void onTabChanged(int position) {
+        // Your function logic for tab change
+        Log.d("TabChange", "Switched to tab: " + position);
+        switch (position)
+        {
+            case 0:
+
+            case 1:
+
+            case 2:
+                enableSearch(true);
+
+                break;
+
+            case 3:
+               enableSearch(false);
+               break;
+
+
+
+        }
     }
 }

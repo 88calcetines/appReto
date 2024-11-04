@@ -8,5 +8,12 @@
         android:icon="@drawable/ic_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom" />
+    <item
+        android:id="@+id/profile"
+        android:title="Pfp"
+        android:icon="@drawable/baseline_user_24"
+
+        app:showAsAction="collapseActionView|ifRoom"/>
+
 
 </menu>

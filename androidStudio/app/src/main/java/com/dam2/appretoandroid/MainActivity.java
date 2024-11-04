@@ -1,5 +1,6 @@
 package com.dam2.appretoandroid;
 
+
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.app.appsearch.SearchResults;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.KeyEventDispatcher;
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_home_black_24dp);
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
