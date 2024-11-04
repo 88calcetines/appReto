@@ -24,11 +24,17 @@
     <h1>TABLETS Y SMARTPHONES</h1>
   </ion-label>
 
-  <div class="videojuegos">
-    <ion-label>
-      <h1>Pixel 8 Pro</h1>
-    </ion-label>
-    <img src="https://eshopfrontend.orange.es/dw/image/v2/BJWB_PRD/on/demandware.static/-/Sites-devices-master-catalog/default/dw82294c9c/images/3003544/google_pixel_8_pro_5g_negro_Frontback.png?sw=400" alt="foto">
-    <p>689€</p>
+  <div class="telefonia" *ngFor="let producto of productos" class="producto">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{producto.nombre}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{producto.precio}}</p>
+        <p>{{producto.stock}}</p>
+        <p>{{producto.descripcion}}</p>
+        <img [src]="producto.imagen" alt="foto">
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

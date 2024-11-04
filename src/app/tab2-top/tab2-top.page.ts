@@ -13,11 +13,11 @@ export class Tab2TopPage implements OnInit {
   constructor(private router: Router, private serviciosService: ServiciosService) { }
 
   ngOnInit() {
-    this.cargarVideojuegos();
+    this.cargarConsolas();
   }
 
-  cargarVideojuegos() {
-    const nombre = 'Telefonia';
+  cargarConsolas() {
+    const nombre = 'Videoconsolas';
     this.serviciosService.getProductosPorNombre(nombre).subscribe(
       res => {
         if (Array.isArray(res)) {
@@ -28,7 +28,7 @@ export class Tab2TopPage implements OnInit {
         console.log(res);
       },
       err => {
-        console.error('Error al obtener las TABLETS Y SMARTPHONES:', err);
+        console.error('Error al obtener las videoconsolas:', err);
       }
     );
   }
