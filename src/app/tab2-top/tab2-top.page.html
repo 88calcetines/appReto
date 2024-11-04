@@ -1,5 +1,6 @@
 <ion-header [translucent]="true">
   <ion-tab-bar slot="top">
+    <ion-searchbar placeholder="Xbox One..." class="search"></ion-searchbar>
     <ion-tab-button tab="tab1-top" href="/tabs/tab1-top">
       <ion-label>Videojuegos</ion-label>
     </ion-tab-button>
@@ -23,11 +24,17 @@
       <h1>CONSOLAS</h1>
     </ion-label>
 
-    <div class="videojuegos">
-      <ion-label>
-        <h1>PS4</h1>
-      </ion-label>
-      <img src="https://media.game.es/COVERV2/3D_L/P05/P05235.png" alt="foto">
-      <p>149,99€</p>
+    <div class="consolas" *ngFor="let producto of productos" class="producto">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{producto.nombre}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>{{producto.precio}}</p>
+          <p>{{producto.stock}}</p>
+          <p>{{producto.descripcion}}</p>
+          <img [src]="producto.imagen" alt="foto">
+        </ion-card-content>
+      </ion-card>
     </div>
 </ion-content>

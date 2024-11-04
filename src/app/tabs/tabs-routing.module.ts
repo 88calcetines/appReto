@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
       },
       {
+        path: 'tab4',
+        loadChildren: () => import('../tab4/tab4.module').then(m => m.Tab4PageModule)  
+      },
+      {
         path: 'tab1-top',
         loadChildren: () => import('../tab1-top/tab1-top.module').then(m => m.Tab1TopPageModule)
       },
@@ -30,6 +34,10 @@ const routes: Routes = [
       {
         path: 'tab3-top',
         loadChildren: () => import('../tab3-top/tab3-top.module').then(m => m.Tab3TopPageModule)
+      },
+      {
+        path: 'tab4-top',
+        loadChildren: () => import('../tab4-top/tab4-top.module').then(m => m.Tab4TopPageModule)
       },
       {
         path: '',

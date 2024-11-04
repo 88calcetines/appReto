@@ -1,0 +1,37 @@
+h1 {
+    text-align: center;
+    margin: 20px;
+    text-shadow: 20px white;
+    font-weight: bold;
+}
+
+.search {
+    width: 300px;
+}
+
+table {
+    text-align: center;
+    margin: 20px auto;
+    width: 400px;
+    height: auto;
+    border: 1px solid white;
+}
+
+tr, td, th {
+    border: 1px solid white;
+    padding: 20px;
+}
+
+.total {
+    margin: auto;
+    width: 400px;
+    border: 1px solid white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .total h3, .total p {
+    margin: 0;
+  }
