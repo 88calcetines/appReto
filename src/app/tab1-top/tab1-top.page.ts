@@ -17,7 +17,7 @@ export class Tab1TopPage implements OnInit {
   }
 
   cargarVideoconsolas() {
-    const nombre = 'Videoconsolas';
+    const nombre = 'Videojuegos';
     this.serviciosService.getProductosPorNombre(nombre).subscribe(
       res => {
         if (Array.isArray(res)) {

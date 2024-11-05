@@ -1,19 +1,58 @@
 .titulo {
     text-align: center;
     margin: 20px;
-    text-shadow: 20px white;
+    text-shadow: 1px 1px 2px white;
 }
 
 .consolas {
-    width: 320px;
-    border: 2px solid white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    height: 600px;
     text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-.consolas p, h1{
+.consolas, .producto {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    margin: 10px;
+}
+
+.consolas p, h1, .title {
     font-weight: bold;
+    word-break: break-word;
 }
 
 .search {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.precio {
+    font-weight: bold;
+}
+
+.selec {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    height: 600px;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #0080ff;
+    font-size: 14px;
 }

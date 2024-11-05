@@ -12,5 +12,11 @@
       <ion-title size="large">Galería</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="image-container">
+    <ion-card *ngFor="let image of images" (click)="openImageDialog(image)">
+      <img [src]="image" class="animated-image"/>
+    </ion-card>
+  </div>
   
 </ion-content>

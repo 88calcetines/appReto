@@ -17,7 +17,7 @@ export class Tab2TopPage implements OnInit {
   }
 
   cargarConsolas() {
-    const nombre = 'Videoconsolas';
+    const nombre = 'Consolas';
     this.serviciosService.getProductosPorNombre(nombre).subscribe(
       res => {
         if (Array.isArray(res)) {
@@ -28,7 +28,7 @@ export class Tab2TopPage implements OnInit {
         console.log(res);
       },
       err => {
-        console.error('Error al obtener las videoconsolas:', err);
+        console.error('Error al obtener las Videoconsolas:', err);
       }
     );
   }

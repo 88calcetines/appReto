@@ -1,10 +1,10 @@
 <ion-header [translucent]="true">
   <ion-tab-bar slot="top">
         
-    <ion-searchbar placeholder="Xbox One..." class="search"></ion-searchbar>
+    <!-- <ion-searchbar placeholder="Xbox One..." class="search"></ion-searchbar> -->
     
     <ion-tab-button tab="tab1-top" href="/tabs/tab1-top">
-      <ion-label>Videojuegos</ion-label>
+      <ion-label class="selec">Videojuegos</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="tab2-top" href="/tabs/tab2-top">
@@ -23,20 +23,21 @@
 
 <ion-content [fullscreen]="true">
   <ion-label class="titulo">
-    <h1>VIDEOCONSOLAS</h1>
+    <h1>VIDEOJUEGOS</h1>
   </ion-label>
 
-  <div class="videojuegos" *ngFor="let producto of productos" class="producto">
+  <div class="consolas" *ngFor="let producto of productos">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>{{producto.nombre}}</ion-card-title>
+        <ion-card-title class="title">{{producto.nombre}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>{{producto.precio}}</p>
-        <p>{{producto.stock}}</p>
         <p>{{producto.descripcion}}</p>
         <img [src]="producto.imagen" alt="foto">
+        <p>Stock: {{producto.stock}}</p>
+        <p class="precio">{{producto.precio}}€</p>
       </ion-card-content>
     </ion-card>
   </div>
+
 </ion-content>

@@ -1,7 +1,7 @@
 h1 {
     text-align: center;
     margin: 20px;
-    text-shadow: 20px white;
+    text-shadow: 1px 1px 2px white;
     font-weight: bold;
 }
 
@@ -30,8 +30,24 @@ tr, td, th {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
+}
   
   .total h3, .total p {
     margin: 0;
-  }
+}
+
+.selec {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    height: 600px;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #0080ff;
+    font-size: 14px;
+}

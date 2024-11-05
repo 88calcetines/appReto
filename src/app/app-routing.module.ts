@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'tab4-top',
     loadChildren: () => import('./tab4-top/tab4-top.module').then( m => m.Tab4TopPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   }
 ];
 @NgModule({

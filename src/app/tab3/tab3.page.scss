@@ -1,0 +1,27 @@
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+ion-card {
+  overflow: hidden;
+  cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+  border-radius: 10px; /* Bordes redondeados para una mejor apariencia */
+}
+
+.animated-image {
+  width: 100%; /* Ocupa todo el ancho del card */
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.animated-image:hover {
+  transform: scale(1.1); /* Escala al pasar el mouse */
+}
+
+.dialog-image {
+  width: 100%;
+  height: auto;
+}

@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('../tab4-top/tab4-top.module').then(m => m.Tab4TopPageModule)
       },
       {
+        path: 'login',
+        loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'

@@ -13,4 +13,9 @@
     </ion-toolbar>
   </ion-header>
 
+  <div style="height: 100%; width: 100%;">
+    <google-map height="100%" width="100%" [center]="center" [zoom]="zoom">
+      <map-marker [options]="markerOptions"></map-marker>
+    </google-map>
+  </div>
 </ion-content>
