@@ -1,4 +1,4 @@
-package com.dam2.appretoandroid.ui.galeria;
+package com.dam2.appretoandroid.ui.login;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,19 +14,18 @@ import android.view.ViewGroup;
 
 import com.dam2.appretoandroid.R;
 
-public class GaleriaInteriorFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
-    private GaleriaInteriorViewModel mViewModel;
-    public static final String ARG_OBJECT = "Interior";
+    private LoginViewModel mViewModel;
 
-    public static GaleriaInteriorFragment newInstance() {
-        return new GaleriaInteriorFragment();
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_galeria_interior, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override

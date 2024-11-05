@@ -77,10 +77,13 @@ dependencies {
     implementation(libs.core.splashscreen)
     implementation(libs.viewpager2)
     implementation(libs.play.services.maps)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
 
 
 }

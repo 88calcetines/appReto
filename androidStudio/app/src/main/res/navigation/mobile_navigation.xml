@@ -27,4 +27,9 @@
         android:name="com.dam2.appretoandroid.ui.historia.HistoriaFragment"
         android:label="@string/title_historia"
         tools:layout="@layout/fragment_historia" />
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.dam2.appretoandroid.ui.login.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
