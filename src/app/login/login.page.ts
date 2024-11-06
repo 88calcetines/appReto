@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
-export class LoginPage {
+export class LoginPage{
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router:Router) {
@@ -20,13 +20,27 @@ export class LoginPage {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value);
-      console.log('Formulario válido', this.loginForm.value);
+      this.authService.login(this.loginForm.value).subscribe(
+        response => {
+          console.log('Login exitoso', response);
+          if (response && response.token) {
+            console.log('Token:', response.token);
+          } else {
+            console.warn('Token no encontrado en la respuesta', response);
+            // Handle the case where the token is not present
+            // For example, you can navigate to an error page or show a message to the user
+          }
+          this.router.navigate(['/tabs/tab1']);
+        },
+        error => {
+          console.error('Error en el registro', error);
+        }
+      );
     }
   }
 
   onRegister() {
     console.log('Registro');
-    this.router.navigate(['/register']);
+    this.router.navigate(['/tabs/register']);
   }
 }

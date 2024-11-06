@@ -20,7 +20,12 @@
       <ion-label>Historia</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="login" href="/tabs/login">
+    <ion-tab-button *ngIf="isLoggedIn()" tab="perfil" href="/tabs/perfil">
+      <ion-icon src="assets/svg/profile.svg" aria-hidden="true"></ion-icon>
+      <ion-label>Mi Perfil</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button *ngIf="!isLoggedIn()" tab="login" href="/tabs/login">
       <ion-icon src="assets/svg/login.svg" aria-hidden="true"></ion-icon>
       <ion-label>Login</ion-label>
     </ion-tab-button>

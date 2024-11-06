@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, catchError, of} from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -13,27 +14,34 @@ export class AuthService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
-    // Verificar si ya hay un token en localStorage al iniciar el servicio
     const token = localStorage.getItem('token');
     if (token) {
       this.loggedIn.next(true);
-      // Aquí podrías recuperar el usuario actual si lo tienes
     }
   }
 
   login(credentials: { email: string; contrasena: string }) {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      tap((response: any) => {
+        console.log('Respuesta completa del servidor:', response);
+  
+        if (response && response.token) {
+          this.storeUserData(response.token, response.user);
+          console.log('Usuario:', response.user, 'Token:', response.token);
+          this.loggedIn.next(true);
+        } else {
+          console.error('Token no encontrado en la respuesta', response);
+        }
+      }),
       catchError((error) => {
         console.error('Error en el inicio de sesión', error);
-        return of(null); // Manejar el error y retornar null
+        return of({ error: 'Error en el inicio de sesión' });
       })
-    ).subscribe(response => {
-      if (response && response.token) {
-        this.storeUserData(response.token, response.user);
-        this.loggedIn.next(true);
-        console.log('Inicio de sesión exitoso');
-      }
-    });
+    );
+  }
+
+  register(credentials: {nombre: string, apellido1: string, apellido2: string, email: string; contrasena: string }) {
+    return this.http.post<any>(`${this.apiUrl}/register`, credentials);
   }
 
   private storeUserData(token: string, user: any) {
