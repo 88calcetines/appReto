@@ -6,16 +6,14 @@ import android.os.Looper;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class AppExecutors
-{
+public class AppExecutors {
     private static final Object LOCK = new Object();
     private static AppExecutors sInstance;
     private final Executor diskIp;
     private final Executor mainThread;
     private final Executor networkIp;
 
-    public AppExecutors(Executor diskIp, Executor mainThread, Executor networkIp)
-    {
+    public AppExecutors(Executor diskIp, Executor mainThread, Executor networkIp) {
         this.diskIp = diskIp;
         this.mainThread = mainThread;
         this.networkIp = networkIp;

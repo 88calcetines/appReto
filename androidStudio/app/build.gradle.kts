@@ -72,7 +72,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(libs.volley)
     implementation (libs.gson)
     implementation(libs.core.splashscreen)
     implementation(libs.viewpager2)
@@ -83,6 +82,8 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    implementation (libs.picasso)
+    implementation (libs.retrofit)
 
 
 

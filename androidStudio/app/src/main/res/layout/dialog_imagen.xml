@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.galeria.GaleriaFragment">
+    android:background="#242424"
+    android:padding="3dp">
 
-    <GridView
-        android:id="@+id/grd_galeria"
+    <ImageView
+        android:id="@+id/ivImagenDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="2"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"/>
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars" />
+
 </LinearLayout>
