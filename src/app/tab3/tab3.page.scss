@@ -7,18 +7,18 @@
 
 ion-card {
   overflow: hidden;
-  cursor: pointer; /* Cambia el cursor para indicar que es clicable */
-  border-radius: 10px; /* Bordes redondeados para una mejor apariencia */
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 .animated-image {
-  width: 100%; /* Ocupa todo el ancho del card */
+  width: 100%;
   height: auto;
   transition: transform 0.3s ease-in-out;
 }
 
 .animated-image:hover {
-  transform: scale(1.1); /* Escala al pasar el mouse */
+  transform: scale(1.1);
 }
 
 .dialog-image {

@@ -1,7 +1,13 @@
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .dialog-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: auto; /* Centra la imagen */
-  }
-  
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: auto;
+}

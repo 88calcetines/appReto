@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ImageDialogComponent } from '../image-dialog/image-dialog.component'; // Asegúrate de importar tu componente de diálogo
+import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-tab3',
