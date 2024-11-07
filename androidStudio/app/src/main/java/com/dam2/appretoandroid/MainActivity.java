@@ -7,16 +7,19 @@ import android.app.appsearch.SearchResults;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.dam2.appretoandroid.api.MyApiAdapter;
+import com.dam2.appretoandroid.modelo.Producto;
+import com.dam2.appretoandroid.ui.UserDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.view.KeyEventDispatcher;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,10 +28,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.dam2.appretoandroid.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainActivity extends AppCompatActivity  {
 
     private ActivityMainBinding binding;
     private SharedViewModel viewModel;
+    private Menu menuG;
 
 
     @Override
@@ -36,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.ic_home_black_24dp);
+
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -55,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
+        Call<Producto> call = MyApiAdapter.getApiService().getProductosNombre("Fifa 24");
+
+        call.enqueue(new Callback<Producto>() {
+            @Override
+            public void onResponse(Call<Producto> call, Response<Producto> response) {
+                Producto foundProducto=response.body();
+                Log.d("producto", foundProducto+"");
+            }
+
+            @Override
+            public void onFailure(Call<Producto> call, Throwable throwable) {
+
+            }
+        });
+
+
+
+
 
     }
 
@@ -62,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         SearchManager searchManager= (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        menuG=menu;
+
 
         SearchView searchView =(SearchView) menu.findItem(R.id.search).getActionView();
         viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
@@ -76,4 +107,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.d("item",item.getItemId()+"");
+        if(item.getItemId()==R.id.profile)
+        {
+            Log.d("d","hahiah");
+            UserDialogFragment userDialogFragment=new UserDialogFragment();
+
+            userDialogFragment.show(getSupportFragmentManager(),"User");
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

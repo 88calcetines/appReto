@@ -84,6 +84,8 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
     implementation (libs.picasso)
     implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.logging.interceptor)
 
 
 

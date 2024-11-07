@@ -32,8 +32,9 @@ public class UserDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new AlertDialog.Builder(requireContext())
-                .create();
+        Dialog dialog=super.onCreateDialog(savedInstanceState);
+        dialog.setTitle("User");
+        return dialog;
 
     }
 
