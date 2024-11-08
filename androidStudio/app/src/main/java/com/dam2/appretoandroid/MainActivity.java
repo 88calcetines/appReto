@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity  {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
-        Call<Producto> call = MyApiAdapter.getApiService().getProductosNombre("Fifa 24");
+        /*Call<Producto> call = MyApiAdapter.getApiService().getProductosNombre("Fifa 24");
 
         call.enqueue(new Callback<Producto>() {
             @Override
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity  {
             public void onFailure(Call<Producto> call, Throwable throwable) {
 
             }
-        });
+        });*/
 
 
 

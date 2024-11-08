@@ -13,8 +13,8 @@ public interface MyApiService
     @GET("productos")
     Call<List<Producto>> getProductos();
 
-    @GET("productos/{nombre}")
-    Call<Producto> getProductosNombre(@Path("nombre")String nombre);
+    @GET("productoCategoria/{nombre}")
+    Call<List<Producto>> getProductosNombre(@Path("nombre")String nombre);
 
 
 
