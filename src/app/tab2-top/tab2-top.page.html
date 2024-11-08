@@ -32,12 +32,12 @@
           <ion-card-title class="title">{{producto.nombre}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p>{{producto.descripcion}}</p>
           <img [src]="producto.imagen" alt="foto">
-          <p>Stock: {{producto.stock}}</p>
+          <p class="valoracion">⭐{{producto.valoracion}}</p>
           <p class="precio">{{producto.precio}}€</p>
         </ion-card-content>
       </ion-card>
     </div>
+  
         
 </ion-content>

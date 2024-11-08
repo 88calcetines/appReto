@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
-export class LoginPage{
+export class LoginPage {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router:Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       contrasena: ['', [Validators.required]]
@@ -20,20 +20,22 @@ export class LoginPage{
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
+      const loginData = this.loginForm.value;
+      console.log('Datos de login:', loginData);
+
+      this.authService.login(loginData).subscribe(
         response => {
           console.log('Login exitoso', response);
           if (response && response.token) {
-            console.log('Token:', response.token);
+            console.log('Token JWT:', response.token);
+            localStorage.setItem('jwtToken', response.token); // Guarda el token en localStorage
+            this.router.navigate(['/tabs/tab1']);
           } else {
             console.warn('Token no encontrado en la respuesta', response);
-            // Handle the case where the token is not present
-            // For example, you can navigate to an error page or show a message to the user
           }
-          this.router.navigate(['/tabs/tab1']);
         },
         error => {
-          console.error('Error en el registro', error);
+          console.error('Error en el login', error);
         }
       );
     }

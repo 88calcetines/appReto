@@ -1,29 +1,35 @@
 .titulo {
     text-align: center;
-    margin: 20px;
+    margin: 10px;
     text-shadow: 1px 1px 2px white;
 }
 
 .consolas {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
-    max-width: 320px;
-    height: 600px;
+    width: 230px;
+    height: auto;
     text-align: center;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-.consolas, .producto {
+.producto {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
+    width: 23%;
     margin: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.valoracion, .precio {
+    color: #0080ff;
+}
+
+.stock, .valoracion, .precio {
+    font-size: 18px;
 }
 
 .consolas p, h1, .title {

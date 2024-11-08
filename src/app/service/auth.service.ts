@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, of} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of} from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -20,24 +20,12 @@ export class AuthService {
     }
   }
 
-  login(credentials: { email: string; contrasena: string }) {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      tap((response: any) => {
-        console.log('Respuesta completa del servidor:', response);
-  
-        if (response && response.token) {
-          this.storeUserData(response.token, response.user);
-          console.log('Usuario:', response.user, 'Token:', response.token);
-          this.loggedIn.next(true);
-        } else {
-          console.error('Token no encontrado en la respuesta', response);
-        }
-      }),
-      catchError((error) => {
-        console.error('Error en el inicio de sesión', error);
-        return of({ error: 'Error en el inicio de sesión' });
-      })
-    );
+  login(credentials: { email: string, contrasena: string }): Observable<any> {
+    const payload = {
+      email: credentials.email,
+      password: credentials.contrasena
+    };
+    return this.http.post<any>(`${this.apiUrl}/login`, payload);
   }
 
   register(credentials: {nombre: string, apellido1: string, apellido2: string, email: string; contrasena: string }) {
