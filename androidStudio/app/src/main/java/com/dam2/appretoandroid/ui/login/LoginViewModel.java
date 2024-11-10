@@ -42,13 +42,7 @@ public class LoginViewModel extends ViewModel {
                     // Get the response body
                     LoginResponse loginResponse = response.body();
 
-                    if (loginResponse != null && loginResponse.getStatusCode() == 200 && loginResponse.getUser() != null) {
-                        // Save the auth token
-                        sessionManager.saveAuthToken(loginResponse.getAuthToken());
-                        loginCorrecto.postValue(true);
-                    } else {
-                        // Handle error in response
-                    }
+
                 }
             }
 

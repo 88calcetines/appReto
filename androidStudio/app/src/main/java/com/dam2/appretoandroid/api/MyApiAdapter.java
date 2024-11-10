@@ -9,7 +9,7 @@ public class MyApiAdapter
 {
     private static MyApiService API_SERVICE;
     private static final String BASE_URL = "https://calcetines88.duckdns.org/";
-    p
+
 
 
     public static MyApiService getApiService(){
