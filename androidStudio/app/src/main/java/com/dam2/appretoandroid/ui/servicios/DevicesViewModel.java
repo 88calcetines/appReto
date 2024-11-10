@@ -2,6 +2,7 @@ package com.dam2.appretoandroid.ui.servicios;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,9 +18,13 @@ import retrofit2.Response;
 public class DevicesViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     private MutableLiveData<List<Producto>> mProductos;
+    private MutableLiveData<String> message;
+    public LiveData<String> toastMessage;
 
     public DevicesViewModel(){
         mProductos=new MutableLiveData<List<Producto>>();
+        message=new MutableLiveData<String>();
+        toastMessage=message;
     }
 
     public void setmProductos(MutableLiveData<List<Producto>> mProductos) {
@@ -42,6 +47,8 @@ public class DevicesViewModel extends ViewModel {
             @Override
             public void onFailure(Call<List<Producto>> call, Throwable throwable) {
                 Log.d("respuesta", "llamada incorrecta");
+                Log.d("respuesta", "llamada incorrecta");
+                message.postValue("No se han podido recuperar los datos");
             }
         });
     }

@@ -19,6 +19,7 @@ import com.dam2.appretoandroid.R;
 import com.dam2.appretoandroid.SharedViewModel;
 import com.dam2.appretoandroid.adapters.ViewPagerAdapter;
 import com.dam2.appretoandroid.databinding.FragmentServiciosBinding;
+import com.dam2.appretoandroid.modelo.Cesta;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -29,6 +30,7 @@ public class ServiciosFragment extends Fragment {
     private String[] nombreTab=new String[4];
     private ViewPagerAdapter viewPagerAdapter;
     private SharedViewModel sharedViewModel;
+    private Cesta cesta;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class ServiciosFragment extends Fragment {
         nombreTab[1]="Consolas";
         nombreTab[2]="Smartphones Tablets";
         nombreTab[3]="Cesta";
+        cesta=new Cesta();
 
         viewPager=view.findViewById(R.id.pager);
         viewPagerAdapter=new ViewPagerAdapter(this);
@@ -103,5 +106,9 @@ public class ServiciosFragment extends Fragment {
 
 
         }
+    }
+    public Cesta getCesta()
+    {
+        return cesta;
     }
 }

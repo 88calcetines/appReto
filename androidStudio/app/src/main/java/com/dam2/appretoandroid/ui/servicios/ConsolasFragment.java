@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dam2.appretoandroid.R;
 import com.dam2.appretoandroid.SharedViewModel;
@@ -68,6 +69,12 @@ public class ConsolasFragment extends Fragment {
                 Log.d("Productos", productos.get(1).getDescripcion());
                 adapter.setProductos(productos);
                 adapter.notifyDataSetChanged();
+            }
+        });
+        mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
             }
         });
 

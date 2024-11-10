@@ -9,6 +9,7 @@ public class MyApiAdapter
 {
     private static MyApiService API_SERVICE;
     private static final String BASE_URL = "https://calcetines88.duckdns.org/";
+    p
 
 
     public static MyApiService getApiService(){
@@ -18,7 +19,8 @@ public class MyApiAdapter
 
 
         // Asociamos el interceptor a las peticiones
-        final OkHttpClient.Builder httpClient= new OkHttpClient.Builder();
+        final OkHttpClient.Builder httpClient= new OkHttpClient.Builder()
+                .authenticator(new AuthAuthenticator());
         httpClient.addInterceptor(logging);
         if(API_SERVICE == null)
         {
@@ -31,4 +33,6 @@ public class MyApiAdapter
         }
         return API_SERVICE;
     }
+
+
 }
