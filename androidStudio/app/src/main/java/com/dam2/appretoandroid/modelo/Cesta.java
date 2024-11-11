@@ -7,9 +7,18 @@ public class Cesta
 
     private ArrayList<Producto> productos;
 
+    public Cesta(ArrayList<Producto> productos) {
+        this.productos = productos;
+    }
+
+    public Cesta() {
+        this.productos=new ArrayList<>();
+    }
     public ArrayList<Producto> getProductos() {
         return productos;
     }
+
+
 
     public void setProductos(ArrayList<Producto> productos) {
         this.productos = productos;

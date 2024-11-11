@@ -31,5 +31,15 @@
         android:id="@+id/navigation_login"
         android:name="com.dam2.appretoandroid.ui.login.LoginFragment"
         android:label="@string/title_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_fragmentlogin_to_fragmentservicio"
+            app:destination="@+id/navigation_servicios"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="com.dam2.appretoandroid.ui.login.PerfilFragment"
+        android:label="@string/perfil"
+        tools:layout="@layout/fragment_perfil" />
 </navigation>

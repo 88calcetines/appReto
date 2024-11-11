@@ -25,5 +25,7 @@ public interface MyApiService
     Call<LoginResponse> login(@Body LoginRequest request);
 
 
+    //register
+    //@POST("register")
 
 }

@@ -58,6 +58,7 @@ public class DevicesFragment extends Fragment {
                 Log.d("Productos", productos.get(1).getDescripcion());
                 adapter.setProductos(productos);
                 adapter.notifyDataSetChanged();
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
         mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {

@@ -1,6 +1,7 @@
 package com.dam2.appretoandroid.ui.login;
 
 import android.content.Context;
+import android.util.Log;
 
 
 import androidx.lifecycle.LifecycleOwner;
@@ -42,13 +43,20 @@ public class LoginViewModel extends ViewModel {
                     // Get the response body
                     LoginResponse loginResponse = response.body();
 
+                    sessionManager.saveAuthToken(loginResponse.getAuthToken());
+                    if(!loginResponse.getAuthToken().isEmpty()){
+                        loginCorrecto.postValue(true);
+                    }
+
+
 
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable throwable) {
-
+                Log.d("login", "incorrecto");
+                loginCorrecto.postValue(false);
             }
         });
 

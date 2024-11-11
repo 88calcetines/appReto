@@ -9,8 +9,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.dam2.appretoandroid.R;
 import com.dam2.appretoandroid.SharedViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class LoginFragment extends Fragment {
@@ -36,6 +40,8 @@ public class LoginFragment extends Fragment {
     private Button btnRegistro;
 
     private Context mContext;
+    private NavController navController;
+    private BottomNavigationView bottomNavigationView;
 
 
 
@@ -53,13 +59,29 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel=new ViewModelProvider(requireParentFragment()).get(LoginViewModel.class);
+        navController= NavHostFragment.findNavController(this);
+        bottomNavigationView=getActivity().findViewById(R.id.nav_view);
         enableSearch(false);
         initializeUi(view);
 
         mViewModel.getLoginCorrecto().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                Toast.makeText(mContext, "loginCOrrecto", Toast.LENGTH_SHORT).show();
+                if(aBoolean){
+                    Toast.makeText(mContext, "loginCOrrecto", Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.action_fragmentlogin_to_fragmentservicio);
+                    bottomNavigationView.getMenu().findItem(R.id.navigation_login).setVisible(false);
+                    if(bottomNavigationView.getMenu().findItem(R.id.navigation_perfil) == null){
+                        bottomNavigationView.getMenu().add(Menu.NONE, R.id.navigation_perfil, Menu.NONE, "Perfil")
+                                .setIcon(R.drawable.ic_dashboard_black_24dp)
+                                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                    }
+
+                }else{
+                    Toast.makeText(mContext, "login inCOrrecto", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -116,6 +138,7 @@ public class LoginFragment extends Fragment {
                     String username = etEmail.getText().toString();
                     String password = etPassword.getText().toString();
                     mViewModel.login(getViewLifecycleOwner(),mContext,username,password);
+
                 }
             }
         });

@@ -22,18 +22,30 @@ public class AuthAuthenticator implements Authenticator {
     public Request authenticate(@Nullable Route route, @NonNull Response response) throws IOException {
         if(response.request().header("Authorization") == null)
         {
-            String authToken=getAuthToken();
+            String authToken = "";
+            if(!getAuthToken().isEmpty())
+            {
+                authToken=getAuthToken();
+                return response.request().newBuilder()
+                        .header("Authorization", "Bearer " + authToken)
+                        .build();
+            }
 
-            return response.request().newBuilder()
-                    .header("Authorization", "Bearer " + authToken)
-                    .build();
+
+
         }
         return response.request();
     }
 
     private String getAuthToken()
     {
-        return sessionManager.fetchAuthToken();
+        String token="";
+        if(!sessionManager.fetchAuthToken().isEmpty()){
+            token=sessionManager.fetchAuthToken();
+
+        }
+        return  token;
+
     }
 
 

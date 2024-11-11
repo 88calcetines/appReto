@@ -20,10 +20,11 @@ import com.dam2.appretoandroid.SharedViewModel;
 import com.dam2.appretoandroid.adapters.ViewPagerAdapter;
 import com.dam2.appretoandroid.databinding.FragmentServiciosBinding;
 import com.dam2.appretoandroid.modelo.Cesta;
+import com.dam2.appretoandroid.modelo.FragmentInterface;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class ServiciosFragment extends Fragment {
+public class ServiciosFragment extends Fragment implements FragmentInterface {
 
     private FragmentServiciosBinding binding;
     private ViewPager2 viewPager;
@@ -107,8 +108,9 @@ public class ServiciosFragment extends Fragment {
 
         }
     }
-    public Cesta getCesta()
-    {
+
+    @Override
+    public Cesta getCesta() {
         return cesta;
     }
 }

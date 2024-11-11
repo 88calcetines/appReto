@@ -55,9 +55,15 @@ public class VideojuegosFragment extends Fragment {
         mViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
             @Override
             public void onChanged(List<Producto> productos) {
-                Log.d("Productos", productos.get(1).getDescripcion());
-                adapter.setProductos(productos);
-                adapter.notifyDataSetChanged();
+
+
+                if(!(productos ==null))
+                {
+                    adapter.setProductos(productos);
+                    adapter.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
         mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
