@@ -29,9 +29,11 @@ export class Tab1Page implements OnInit {
     console.log('Producto añadido a la cesta:', producto);
     this.actualizarCantidadProductos();
     const alert = await this.alertController.create({
-      message: 'Producto añadido a la cesta',
+      header: '¡Éxito!',
+      subHeader: 'Producto añadido a la cesta',
+      message: 'El producto se ha añadido correctamente a tu cesta de compras.',
       buttons: ['OK'],
-      cssClass: 'custom-alert'
+      cssClass: 'success-alert',  // Clase CSS personalizada
     });
   
     await alert.present();
