@@ -3,7 +3,8 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-content>
+  <ion-content class="login-container">
+    <div class="login-box">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
       <ion-item>
@@ -20,6 +21,7 @@
       <ion-button expand="full" (click)="onRegister()">Registrarse</ion-button>
       
     </form>
-  </ion-content>  
+  </div>
+</ion-content>
   
 </ion-content>

@@ -28,10 +28,11 @@ export class LoginPage {
           console.log('Login exitoso', response);
           if (response && response.token) {
             console.log('Token JWT:', response.token);
-            localStorage.setItem('jwtToken', response.token); // Guarda el token en localStorage
+            localStorage.setItem('jwtToken', response.token);
             this.router.navigate(['/tabs/tab1']);
           } else {
             console.warn('Token no encontrado en la respuesta', response);
+
           }
         },
         error => {

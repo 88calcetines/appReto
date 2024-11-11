@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServiciosService } from '../service/servicios.service';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-perfil',
@@ -9,32 +10,40 @@ import { ServiciosService } from '../service/servicios.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  foto: string | undefined;
-  user: any; // Define la propiedad user
-  nombre: string | undefined; // Define la propiedad nombre
+  imagen: string | undefined;
+  user: any;
+  nombre: string | undefined;
+  email: string | undefined;
+  apellido1: string | undefined;
+  apellido2: string | undefined;
 
-  constructor(private router: Router, private serviciosService: ServiciosService) { }
+  constructor(private router: Router, private serviciosService: ServiciosService, private authService: AuthService) { }
 
   ngOnInit() {
     this.loadUser();
   }
 
-  loadUser() {
-    // Aquí debes implementar la lógica para obtener el usuario actual
-    // Por ejemplo, podrías obtenerlo desde el localStorage o desde un servicio de autenticación
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      this.user = JSON.parse(userData);
-      this.nombre = this.user.nombre; // Asigna el nombre del usuario a la propiedad nombre
-      this.cargarFoto(); // Mueve la llamada a cargarFoto aquí
-    } else {
-      // Manejar el caso en que no haya un usuario logueado
-      console.error('No user found');
-      this.router.navigate(['/tabs/login']);
-    }
+loadUser() {
+  this.user = this.authService.getCurrentUser();
+  console.log('Usuario cargado:', this.user);  // Asegúrate de que el usuario es correcto.
+  if (this.user) {
+    this.nombre = this.user.nombre;
+    this.email = this.user.email;
+    this.apellido1 = this.user.apellido1;
+    this.apellido2 = this.user.apellido2;
+    console.log('Nombre:', this.nombre);
+    console.log('Email:', this.email);
+    console.log('Apellido1:', this.apellido1);
+    console.log('Apellido2:', this.apellido2);
+  } else {
+    console.error('No user found');
+    this.router.navigate(['/tabs/login']);
   }
+}
 
-  cargarFoto() {
+  
+
+  /*cargarimagen() {
     if (this.user && this.user.id) {
       this.serviciosService.getFotoUsuario(this.user.id).subscribe(
         res => {
@@ -45,9 +54,9 @@ export class PerfilPage implements OnInit {
         }
       );
     }
-  }
+  }*/
 
-  async updateFoto() {
+  /*async updateFoto() {
     if (!this.user || !this.user.id) {
       console.error('User not loaded');
       return;
@@ -77,13 +86,13 @@ export class PerfilPage implements OnInit {
         }
       });
     }
-  }
+  }*/
 
   // Función para cerrar sesión
   logout() {
-    const token = localStorage.getItem('jwtToken');
+    const token = localStorage.getItem('token');
     if (token) {
-      localStorage.removeItem('jwtToken');
+      localStorage.removeItem('token');
       console.log('Token removed');
       this.router.navigate(['/tabs/login']);
     } else {

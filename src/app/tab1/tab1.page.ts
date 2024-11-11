@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiciosService } from '../service/servicios.service';
+import { CestaService } from '../service/cesta.service';
+import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -6,13 +10,55 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-
+  productosMejoresValorados: any[] = [];
   token: string | null = null;
+  cantidadProductos: number = 0;
 
-  constructor() {}
+  constructor(private serviciosService:ServiciosService, private cestaService:CestaService, private loadingController:LoadingController, private alertController:AlertController) {}
 
   ngOnInit() {
-    this.token = localStorage.getItem('jwtToken'); // Recupera el token de localStorage
-    console.log('Token JWT:', this.token); // Muestra el token en la consola
+    this.token = localStorage.getItem('jwtToken');
+    console.log('Token JWT:', this.token);
+    this.cargarProductosMejoresValorados();
+    this.actualizarCantidadProductos();
+    this.cargarProductosMejoresValorados();
   }
+
+  async agregarACesta(producto: any) {
+    this.cestaService.addItem(producto);
+    console.log('Producto añadido a la cesta:', producto);
+    this.actualizarCantidadProductos();
+    const alert = await this.alertController.create({
+      message: 'Producto añadido a la cesta',
+      buttons: ['OK'],
+      cssClass: 'custom-alert'
+    });
+  
+    await alert.present();
+  }
+  
+
+  actualizarCantidadProductos() {
+    this.cantidadProductos = this.cestaService.getItems().length;
+  }
+
+  async cargarProductosMejoresValorados() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando productos...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    this.serviciosService.getProductosMejoresValorados().subscribe(
+      productos => {
+        this.productosMejoresValorados = productos;
+        loading.dismiss();
+      },
+      error => {
+        console.error('Error al cargar productos:', error);
+        loading.dismiss();
+      }
+    );
+  }
+
 }

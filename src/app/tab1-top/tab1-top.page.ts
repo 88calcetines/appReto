@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiciosService } from '../service/servicios.service';
+import { CestaService } from '../service/cesta.service';
 
 @Component({
   selector: 'app-tab1-top',
@@ -9,8 +10,9 @@ import { ServiciosService } from '../service/servicios.service';
 })
 export class Tab1TopPage implements OnInit {
   productos: any[] = [];
+  cantidadProductos: number = 0;
 
-  constructor(private router: Router, private serviciosService: ServiciosService) { }
+  constructor(private router: Router, private serviciosService: ServiciosService, private cestaService:CestaService) { }
 
   ngOnInit() {
     this.cargarVideoconsolas();
@@ -31,5 +33,14 @@ export class Tab1TopPage implements OnInit {
         console.error('Error al obtener las videoconsolas:', err);
       }
     );
+  }
+
+  agregarACesta(producto: any) {
+    this.cestaService.addItem(producto);
+    console.log('Producto añadido a la cesta:', producto);
+  }
+
+  actualizarCantidadProductos() {
+    this.cantidadProductos = this.cestaService.getItems().length;
   }
 }

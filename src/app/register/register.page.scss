@@ -1,0 +1,58 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+  }
+  
+  .login-box {
+    background: linear-gradient(180deg, #0080ff, #a777e3);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .login-box ion-label img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .login-box ion-label h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .login-box form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-box form ion-item {
+    margin-bottom: 15px;
+  }
+  
+  .login-box form ion-button {
+    width: 100%;
+    margin-top: 20px;
+    color: aliceblue;
+    font-weight: bold;
+    --background: #363636;
+    --background-activated: #363636;
+    --background-focused: #363636;
+    --background-hover: #363636;
+  }
+  
+  .login-box form ion-button:last-child {
+    margin-top: 10px;
+    --background: #a777e3;
+    --background-activated: #8f5fc2;
+    --background-focused: #8f5fc2;
+    --background-hover: #8f5fc2;
+    --border-radius: 20px; /* Añadir border-radius personalizado */
+  }

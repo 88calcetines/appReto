@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, of} from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -17,42 +18,119 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (token) {
       this.loggedIn.next(true);
+      this.setCurrentUserFromToken(token);
     }
   }
 
-  login(credentials: { email: string, contrasena: string }): Observable<any> {
+  login(credentials: { email: string; contrasena: string }): Observable<any> {
     const payload = {
       email: credentials.email,
       password: credentials.contrasena
     };
-    return this.http.post<any>(`${this.apiUrl}/login`, payload);
+    return this.http.post<any>(`${this.apiUrl}/login`, payload).pipe(
+      tap((response: any) => {
+        if (response && response.token) {
+          this.storeUserData(response.token);
+          this.loggedIn.next(true);
+        } else {
+          console.error('Token no encontrado en la respuesta', response);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en el inicio de sesión', error);
+        return of({ error: 'Error en el inicio de sesión' });
+      })
+    );
   }
 
-  register(credentials: {nombre: string, apellido1: string, apellido2: string, email: string; contrasena: string }) {
-    return this.http.post<any>(`${this.apiUrl}/register`, credentials);
-  }
-
-  private storeUserData(token: string, user: any) {
-    localStorage.setItem('token', token);
-    this.currentUserSubject.next(user);
+  register(credentials: { nombre: string, apellido1: string, apellido2: string, email: string, contrasena: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, credentials).pipe(
+      tap((response: any) => {
+        if (response && response.token) {
+          this.storeUserData(response.token);
+          this.loggedIn.next(true);
+        } else {
+          console.error('Token no encontrado en la respuesta', response);
+        }
+      }),
+      catchError((error) => {
+        console.error('Error en el registro', error);
+        return of({ error: 'Error en el registro' });
+      })
+    );
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.currentUserSubject.next(null);
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
 
-  isLoggedIn() {
+  isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  getCurrentUser() {
-    return this.currentUserSubject.getValue();
+  private storeUserData(token: string) {
+    localStorage.setItem('token', token);
+    this.setCurrentUserFromToken(token);
   }
+
+  private setCurrentUserFromToken(token: string) {
+    const decodedToken: any = jwtDecode(token);
+    console.log('Token decodificado:', decodedToken);
+    const user = {
+      email: decodedToken.username // Almacena el correo electrónico en el campo email
+    };
+    localStorage.setItem('user', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+    this.getPerfil().subscribe({
+      next: (perfil) => {
+        if (perfil) {
+          const updatedUser = {
+            ...user,
+            nombre: perfil.nombre,
+            apellido1: perfil.apellido1,
+            apellido2: perfil.apellido2
+          };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          this.currentUserSubject.next(updatedUser);
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener el perfil', error);
+      }
+    });
+  }
+
+  getCurrentUser() {
+    const user = localStorage.getItem('user');
+    if(user) {
+      const parsedUser = JSON.parse(user);
+      return {
+        nombre: parsedUser.nombre,
+        apellido1: parsedUser.apellido1,
+        apellido2: parsedUser.apellido2,
+        email: parsedUser.email
+      }
+    }
+    return user ? JSON.parse(user) : null;
+  }
+
+  getPerfil(): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<any>(`${this.apiUrl}/miperfil`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error al obtener el perfil', error);
+        return of(null);
+      })
+    );
+  }
+  
 }

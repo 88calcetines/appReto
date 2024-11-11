@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServiciosService } from '../service/servicios.service';
+import { CestaService } from '../service/cesta.service';
 
 @Component({
   selector: 'app-tab2-top',
@@ -9,8 +10,9 @@ import { ServiciosService } from '../service/servicios.service';
 })
 export class Tab2TopPage implements OnInit {
   productos: any[] = [];
+  cantidadProductos: number = 0;
 
-  constructor(private router: Router, private serviciosService: ServiciosService) { }
+  constructor(private router: Router, private serviciosService: ServiciosService, private cestaService:CestaService) { }
 
   ngOnInit() {
     this.cargarConsolas();
@@ -33,4 +35,12 @@ export class Tab2TopPage implements OnInit {
     );
   }
 
+  agregarACesta(producto: any) {
+    this.cestaService.addItem(producto);
+    console.log('Producto añadido a la cesta:', producto);
+  }
+
+  actualizarCantidadProductos() {
+    this.cantidadProductos = this.cestaService.getItems().length;
+  }
 }

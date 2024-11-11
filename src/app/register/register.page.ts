@@ -17,7 +17,7 @@ export class RegisterPage {
       apellido1: ['', [Validators.required]],
       apellido2: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      contrasena: ['', [Validators.required]]
+      password: ['', [Validators.required]]
     });
   }
 

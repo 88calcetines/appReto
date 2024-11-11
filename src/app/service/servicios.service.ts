@@ -20,9 +20,8 @@ export class ServiciosService {
   }
 
   getProductosMejoresValorados(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiAlmi + 'productoMejoresValorados');
+    return this.http.get<any[]>(this.apiAlmi + 'productosMejoresValorados');
   }
-
 
   getFotoUsuario(userId: number): Observable<string> {
     return this.http.get<string>(`${this.apiAlmi}miperfil/${userId}/foto`);
