@@ -31,4 +31,8 @@ export class ServiciosService {
     return this.http.post<any>(url, formData);
   }
 
+  productosRecientes(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiAlmi + 'productosRecientes');
+  }
+
 }

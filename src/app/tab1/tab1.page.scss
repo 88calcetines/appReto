@@ -84,6 +84,12 @@
   padding: 10px 0;
   background: linear-gradient(90deg, rgba(0, 128, 255, 0.1) 0%, rgba(0, 128, 255, 0.3) 100%);
   border-radius: 10px;
+  word-wrap: break-word;
+  white-space: normal;
+  @media (max-width: 600px) {
+    font-size: 16px; /* Reducir el tamaño de la fuente en dispositivos móviles */
+    padding: 8px 0; /* Ajustar el espaciado interno */
+  }
 }
 
 ::ng-deep .custom-alert {

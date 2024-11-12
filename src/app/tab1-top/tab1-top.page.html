@@ -36,7 +36,9 @@
         <div class="derecha">
           <p class="valoracion">⭐{{producto.valoracion}}</p>
           <p class="precio">{{producto.precio}}€</p>
-          <ion-button (click)="agregarACesta(producto)"><img src="assets/svg/cart.svg" alt=""></ion-button>
+          <ion-button (click)="agregarACesta(producto)">
+            <img src="assets/svg/cart.svg" alt="cesta">
+          </ion-button>
         </div>
       </ion-card-content>
     </ion-card>

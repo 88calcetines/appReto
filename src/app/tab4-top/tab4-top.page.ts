@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CestaService } from '../service/cesta.service';
-import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab4-top',
@@ -13,10 +13,11 @@ export class Tab4TopPage implements OnInit {
   cantidadProductos: number = 0;
   productosCesta: any[] = [];
 
-  constructor(private cestaService:CestaService, private loadingController:LoadingController) {}
+  constructor(private cestaService:CestaService, private alertController:AlertController) {}
 
   ngOnInit() {
     this.loadItems();
+    this.actualizarCantidadProductos();
   }
 
   loadItems() {
@@ -24,10 +25,27 @@ export class Tab4TopPage implements OnInit {
     this.calculateTotal();
   }
 
-  eliminar(index: number) {
-    this.cestaService.removeItem(index);
-    this.loadItems();
-    console.log('Producto eliminado de la cesta:', index);
+  async eliminar(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Confirmación',
+      message: '¿Desea eliminar este producto de la cesta?',
+      buttons: [
+        {
+          text: 'CANCELAR',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.cestaService.removeItem(index);
+            this.loadItems();
+            this.actualizarCantidadProductos();
+          }
+        }
+      ],
+    });
+    await alert.present();
   }
 
   calculateTotal() {
@@ -36,5 +54,9 @@ export class Tab4TopPage implements OnInit {
 
   actualizarCantidadProductos() {
     this.cantidadProductos = this.cestaService.getItems().length;
+  }
+
+  ionViewWillEnter() {
+    this.actualizarCantidadProductos();
   }
 }

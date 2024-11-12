@@ -21,14 +21,27 @@
 </ion-header>
 
 <ion-header>
-  <ion-toolbar>
     <ion-title class="custom-title">Productos mejores valorados</ion-title>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="slide-container">
     <div class="slide" *ngFor="let producto of productosMejoresValorados">
+      <div class="product-container">
+        <ion-card-title class="title">{{ producto.nombre }}</ion-card-title>
+        <img class="foto" [src]="producto.imagen" alt="foto">
+        <ion-card-title class="title">⭐{{ producto.valoracion }}</ion-card-title>
+        <ion-button (click)="agregarACesta(producto)">
+          <img src="assets/svg/cart.svg" alt="">
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+    <ion-title class="custom-title">Productos añadidos recientemente</ion-title>.
+
+  <div class="slide-container">
+    <div class="slide" *ngFor="let producto of productosRecientes">
       <div class="product-container">
         <ion-card-title class="title">{{ producto.nombre }}</ion-card-title>
         <img class="foto" [src]="producto.imagen" alt="foto">
