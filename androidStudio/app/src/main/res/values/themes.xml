@@ -24,4 +24,8 @@
     <style name="RoundedSquare">
         <item name="cornerSize">10%</item>
     </style>
+
+    <style name="cardView">
+        <item name="android:background">@drawable/login_gradient</item>
+    </style>
 </resources>

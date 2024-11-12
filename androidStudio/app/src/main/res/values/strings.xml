@@ -35,4 +35,7 @@
     </string>
     <string name="perfil">Perfil</string>
     <string name="reload">Reload</string>
+    <string name="productos_mejor_valorados">Productos Mejor Valorados</string>
+    <string name="productos_mas_recientes">Productos mas Recientes</string>
+    <string name="productos_mas_baratos">Productos mas Baratos</string>
 </resources>

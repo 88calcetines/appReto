@@ -1,5 +1,6 @@
 package com.dam2.appretoandroid.ui.servicios;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -30,9 +32,12 @@ public class DevicesFragment extends Fragment {
 
     private DevicesViewModel mViewModel;
     public static final String ARG_OBJECT = "Devices";
-    private RecyclerView rvProductos;
+    private RecyclerView rvProductosMejorValorados;
+    private RecyclerView rvProductosBaratos;
+    private RecyclerView rvProductosRecientes;
     private Context mContext;
     private Button btnReload;
+    private VideojuegosViewModel sharedViewModel;
 
     public static DevicesFragment newInstance() {
         return new DevicesFragment();
@@ -47,15 +52,28 @@ public class DevicesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel=new ViewModelProvider(this).get(DevicesViewModel.class);
-        mViewModel.cargarProductos();
-        rvProductos=view.findViewById(R.id.rvProductos);
+        sharedViewModel=new ViewModelProvider(this).get(VideojuegosViewModel.class);
+        sharedViewModel.setCategoria("Telefonia");
+        sharedViewModel.cargarProductos();
         btnReload=view.findViewById(R.id.btnReload);
-        GridLayoutManager layoutManager=new GridLayoutManager(mContext,2);
-        rvProductos.setLayoutManager(layoutManager);
+
+
+        rvProductosMejorValorados=view.findViewById(R.id.rvProductosMejorValorados);
+        rvProductosMejorValorados.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
         ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
-        rvProductos.setAdapter(adapter);
-        mViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+        rvProductosMejorValorados.setAdapter(adapter);
+
+        rvProductosBaratos=view.findViewById(R.id.rvProductosBaratos);
+        rvProductosBaratos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterBaratos= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosBaratos.setAdapter(adapter);
+
+        rvProductosRecientes=view.findViewById(R.id.rvProductosRecientes);
+        rvProductosRecientes.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterRecientes= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosRecientes.setAdapter(adapter);
+
+        sharedViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
             @Override
             public void onChanged(List<Producto> productos) {
                 Log.d("Productos", productos.get(1).getDescripcion());
@@ -64,7 +82,7 @@ public class DevicesFragment extends Fragment {
                 view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
-        mViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        sharedViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(!aBoolean)
@@ -73,6 +91,30 @@ public class DevicesFragment extends Fragment {
                     view.findViewById(R.id.btnReload).setVisibility(View.VISIBLE);
 
                 }
+            }
+        });
+        sharedViewModel.getmProductosBaratos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterBaratos.setProductos(productos);
+                    adapterBaratos.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }
+        });
+        sharedViewModel.getmProductosRecientes().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterRecientes.setProductos(productos);
+                    adapterRecientes.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
         btnReload.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +126,7 @@ public class DevicesFragment extends Fragment {
 
             }
         });
-        mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
+        sharedViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();

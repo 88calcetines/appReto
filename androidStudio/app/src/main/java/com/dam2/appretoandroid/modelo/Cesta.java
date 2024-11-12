@@ -1,6 +1,9 @@
 package com.dam2.appretoandroid.modelo;
 
+import androidx.room.Entity;
+
 import java.util.ArrayList;
+
 
 public class Cesta
 {

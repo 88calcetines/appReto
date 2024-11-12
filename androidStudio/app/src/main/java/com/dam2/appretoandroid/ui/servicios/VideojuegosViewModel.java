@@ -17,34 +17,49 @@ import retrofit2.Response;
 
 public class VideojuegosViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-    private MutableLiveData<List<Producto>> mProductos;
+    private MutableLiveData<List<Producto>> mProductosMejorValorados;
+    private MutableLiveData<List<Producto>> mProductosRecientes;
+    private MutableLiveData<List<Producto>> mProductosBaratos;
     private MutableLiveData<String> message;
     private MutableLiveData<Boolean> llamadaCorrecta;
     public LiveData<String> toastMessage;
+    private String categoria;
 
     public VideojuegosViewModel(){
-        mProductos=new MutableLiveData<List<Producto>>();
+        mProductosMejorValorados=new MutableLiveData<List<Producto>>();
+        mProductosRecientes=new MutableLiveData<List<Producto>>();
+        mProductosBaratos=new MutableLiveData<List<Producto>>();
+
         message=new MutableLiveData<String>();
         llamadaCorrecta=new MutableLiveData<Boolean>();
         toastMessage=message;
+
     }
 
     public void setmProductos(MutableLiveData<List<Producto>> mProductos) {
-        this.mProductos = mProductos;
+        this.mProductosMejorValorados = mProductos;
     }
     public MutableLiveData<List<Producto>> getmProductos(){
-        return mProductos;
+        return mProductosMejorValorados;
+    }
+
+    public MutableLiveData<List<Producto>> getmProductosRecientes() {
+        return mProductosRecientes;
+    }
+
+    public MutableLiveData<List<Producto>> getmProductosBaratos() {
+        return mProductosBaratos;
     }
 
     public void cargarProductos()
     {
-        Call<List<Producto>> call= MyApiAdapter.getApiService().getProductosNombre("Videojuegos");
+        Call<List<Producto>> call= MyApiAdapter.getApiService().getProductosMejorValorados();
         call.enqueue(new Callback<List<Producto>>() {
             @Override
             public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
 
 
-                mProductos.postValue(response.body());
+                mProductosMejorValorados.postValue(response.body());
             }
 
             @Override
@@ -54,9 +69,42 @@ public class VideojuegosViewModel extends ViewModel {
                 llamadaCorrecta.postValue(false);
             }
         });
+        Call<List<Producto>> callValorados= MyApiAdapter.getApiService().getProductosMasBaratos(categoria);
+        callValorados.enqueue(new Callback<List<Producto>>() {
+            @Override
+            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
+                mProductosBaratos.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Producto>> call, Throwable throwable) {
+                message.postValue("No se han podido recuperar los datos");
+                llamadaCorrecta.postValue(false);
+            }
+        });
+
+        Call<List<Producto>> callRecientes= MyApiAdapter.getApiService().getProductosRecientes();
+        callRecientes.enqueue(new Callback<List<Producto>>() {
+            @Override
+            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
+                mProductosRecientes.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Producto>> call, Throwable throwable) {
+                message.postValue("No se han podido recuperar los datos");
+                llamadaCorrecta.postValue(false);
+            }
+        });
+
+
     }
 
     public MutableLiveData<Boolean> getLlamadaCorrecta() {
         return llamadaCorrecta;
+    }
+    public void setCategoria(String categoria)
+    {
+        this.categoria=categoria;
     }
 }

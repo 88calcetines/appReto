@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dam2.appretoandroid.MainActivity;
 import com.dam2.appretoandroid.R;
 import com.dam2.appretoandroid.SharedViewModel;
 
@@ -38,6 +39,7 @@ public class HistoriaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
     private void enableSearch(boolean state)

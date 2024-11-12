@@ -24,6 +24,16 @@ public interface MyApiService
     @POST("login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
+    @GET("productosMejoresValorados")
+    Call<List<Producto>> getProductosMejorValorados();
+
+    @GET("productosMasBaratosporCategoria/{nombre}")
+    Call<List<Producto>> getProductosMasBaratos(@Path("nombre")String nombre);
+
+    @GET("productosRecientes")
+    Call<List<Producto>> getProductosRecientes();
+
+
 
     //register
     //

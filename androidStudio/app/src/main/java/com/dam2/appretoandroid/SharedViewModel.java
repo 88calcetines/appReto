@@ -1,17 +1,54 @@
 package com.dam2.appretoandroid;
 
+import android.app.Application;
 import android.view.MenuItem;
 import android.view.View;
 
 
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SharedViewModel extends ViewModel {
+import com.dam2.appretoandroid.modelo.CestaProducto;
 
+import java.util.List;
+
+public class SharedViewModel extends AndroidViewModel {
+
+    private CestaItemRepository cestaItemRepository;
+    private LiveData<List<CestaProducto>> cartItems;
+    private LiveData<Double> totalPrice;
     private final MutableLiveData<MenuItem> liveView = new MutableLiveData<>();
+    public SharedViewModel(Application application)
+    {
+        super(application);
+        cestaItemRepository = new CestaItemRepository(application);
+        cartItems= cestaItemRepository.getAllItems();
+        totalPrice= cestaItemRepository.getPrecioTotal();
+
+    }
+
+    public LiveData<List<CestaProducto>> getCartItems() {
+        return cartItems;
+    }
+
+    public LiveData<Double> getTotalPrice() {
+        return totalPrice;
+    }
+
+    public MutableLiveData<MenuItem> getLiveView() {
+        return liveView;
+    }
+    public void addItemToCart(CestaProducto producto)
+    {
+        cestaItemRepository.insertItem(producto);
+    }
+
+    public void removeItemFromCart(CestaProducto producto) {
+        cestaItemRepository.deleteItem(producto);
+    }
 
     public void setMenuItem(MenuItem searchView)
     {

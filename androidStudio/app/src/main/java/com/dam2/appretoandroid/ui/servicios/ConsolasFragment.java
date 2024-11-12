@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -31,9 +32,11 @@ import java.util.List;
 public class ConsolasFragment extends Fragment {
 
     private ConsolasViewModel mViewModel;
-    private SharedViewModel sharedViewModel;
+    private VideojuegosViewModel sharedViewModel;
     public static final String ARG_OBJECT = "Consolas";
-    private RecyclerView rvProductos;
+    private RecyclerView rvProductosMejorValorados;
+    private RecyclerView rvProductosBaratos;
+    private RecyclerView rvProductosRecientes;
     private Context mContext;
     private Button btnReload;
 
@@ -57,16 +60,27 @@ public class ConsolasFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel=new ViewModelProvider(this).get(ConsolasViewModel.class);
-        mViewModel.cargarProductos();
-        rvProductos=view.findViewById(R.id.rvProductos);
+        sharedViewModel=new ViewModelProvider(this).get(VideojuegosViewModel.class);
+        sharedViewModel.setCategoria("Consolas");
         btnReload=view.findViewById(R.id.btnReload);
-        GridLayoutManager layoutManager=new GridLayoutManager(mContext,2);
-        rvProductos.setLayoutManager(layoutManager);
-        ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
-        rvProductos.setAdapter(adapter);
+        sharedViewModel.cargarProductos();
 
-        mViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+        rvProductosMejorValorados=view.findViewById(R.id.rvProductosMejorValorados);
+        rvProductosMejorValorados.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosMejorValorados.setAdapter(adapter);
+
+        rvProductosBaratos=view.findViewById(R.id.rvProductosBaratos);
+        rvProductosBaratos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterBaratos= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosBaratos.setAdapter(adapter);
+
+        rvProductosRecientes=view.findViewById(R.id.rvProductosRecientes);
+        rvProductosRecientes.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterRecientes= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosRecientes.setAdapter(adapter);
+
+        sharedViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
             @Override
             public void onChanged(List<Producto> productos) {
 
@@ -75,7 +89,31 @@ public class ConsolasFragment extends Fragment {
                 view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
-        mViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        sharedViewModel.getmProductosBaratos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterBaratos.setProductos(productos);
+                    adapterBaratos.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }
+        });
+        sharedViewModel.getmProductosRecientes().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterRecientes.setProductos(productos);
+                    adapterRecientes.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }
+        });
+        sharedViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(!aBoolean)
@@ -95,7 +133,7 @@ public class ConsolasFragment extends Fragment {
 
             }
         });
-        mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
+        sharedViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();

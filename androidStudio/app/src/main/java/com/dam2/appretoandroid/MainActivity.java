@@ -16,6 +16,7 @@ import com.dam2.appretoandroid.api.MyApiAdapter;
 import com.dam2.appretoandroid.api.SessionManager;
 import com.dam2.appretoandroid.modelo.Producto;
 import com.dam2.appretoandroid.ui.UserDialogFragment;
+import com.dam2.appretoandroid.ui.login.PerfilFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

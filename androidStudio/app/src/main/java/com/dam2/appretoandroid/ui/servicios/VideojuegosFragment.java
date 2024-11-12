@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -20,17 +21,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.dam2.appretoandroid.R;
+import com.dam2.appretoandroid.SharedViewModel;
 import com.dam2.appretoandroid.adapters.ProductosRecyclerViewAdapter;
+import com.dam2.appretoandroid.modelo.CestaProducto;
 import com.dam2.appretoandroid.modelo.Producto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideojuegosFragment extends Fragment {
+public class VideojuegosFragment extends Fragment implements ProductosRecyclerViewAdapter.OnAddToCartClickListener {
 
     private VideojuegosViewModel mViewModel;
     public static final String ARG_OBJECT = "Videojuegos";
-    private RecyclerView rvProductos;
+    private RecyclerView rvProductosMejorValorados;
+    private RecyclerView rvProductosBaratos;
+    private RecyclerView rvProductosRecientes;
+    private SharedViewModel sharedViewModel;
+
     private Context mContext;
     private Button btnReload;
 
@@ -48,12 +55,27 @@ public class VideojuegosFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel=new ViewModelProvider(this).get(VideojuegosViewModel.class);
+        sharedViewModel =new ViewModelProvider(this).get(SharedViewModel.class);
+        mViewModel.setCategoria("Videojuegos");
         mViewModel.cargarProductos();
-        rvProductos=view.findViewById(R.id.rvProductos);
-        GridLayoutManager layoutManager=new GridLayoutManager(mContext,2);
-        rvProductos.setLayoutManager(layoutManager);
+
+
+        rvProductosMejorValorados=view.findViewById(R.id.rvProductosMejorValorados);
+        rvProductosMejorValorados.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
         ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
-        rvProductos.setAdapter(adapter);
+        rvProductosMejorValorados.setAdapter(adapter);
+
+        rvProductosBaratos=view.findViewById(R.id.rvProductosBaratos);
+        rvProductosBaratos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterBaratos= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosBaratos.setAdapter(adapter);
+
+        rvProductosRecientes=view.findViewById(R.id.rvProductosRecientes);
+        rvProductosRecientes.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterRecientes= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
+        rvProductosRecientes.setAdapter(adapter);
+
+
         btnReload=view.findViewById(R.id.btnReload);
         mViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
             @Override
@@ -64,6 +86,30 @@ public class VideojuegosFragment extends Fragment {
                 {
                     adapter.setProductos(productos);
                     adapter.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }
+        });
+        mViewModel.getmProductosBaratos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterBaratos.setProductos(productos);
+                    adapterBaratos.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }
+        });
+        mViewModel.getmProductosRecientes().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterRecientes.setProductos(productos);
+                    adapterRecientes.notifyDataSetChanged();
                 }
 
                 view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
@@ -102,5 +148,10 @@ public class VideojuegosFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.mContext=context;
+    }
+
+    @Override
+    public void onAddToCartClickListener(CestaProducto producto) {
+        sharedViewModel.addItemToCart(producto);
     }
 }

@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dam2.appretoandroid.R;
+import com.dam2.appretoandroid.modelo.CestaProducto;
 import com.dam2.appretoandroid.modelo.Producto;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +30,8 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
     private FragmentManager fragmentManager;
     private static final String localPath = "androidStudio/app/src/main";
     private AssetManager assetManager;
+    private OnAddToCartClickListener onAddToCartClickListener;
+
 
     public ProductosRecyclerViewAdapter(Context mContext, FragmentManager fragmentManager, ArrayList<Producto> productos) {
         this.mContext = mContext;
@@ -40,12 +43,14 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
     {
         private final ImageView holderIv;
         private final TextView holderTv;
+        private final TextView holderTvValoracion;
 
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             holderIv=itemView.findViewById(R.id.ivProducto);
             holderTv= itemView.findViewById(R.id.tvProducto);
+            holderTvValoracion=itemView.findViewById(R.id.tvValoracion);
         }
         public ImageView getHolderIv(){return holderIv;}
         public TextView getHolderTv(){return holderTv;}
@@ -67,6 +72,8 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
 
 
         Producto producto=productos.get(position);
+         CestaProducto cestaProducto=new CestaProducto(producto.getNombre(),producto.getPrecio(),
+                producto.getStock(),producto.getDescripcion(),producto.getImagen(),producto.getTipo_producto(),producto.getValoracion());
         try {
             String imagepath=producto.getImagen().substring("assets/".length());
             if (imagepath.startsWith("/")) {
@@ -86,6 +93,13 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
 
 
         holder.holderTv.setText(producto.getNombre());
+        holder.holderTvValoracion.setText(producto.getValoracion()+"");
+        holder.holderIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddToCartClickListener.onAddToCartClickListener(cestaProducto);
+            }
+        });
     }
 
     @Override
@@ -96,6 +110,9 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
     public void setProductos(List<Producto> productos)
     {
         this.productos=new ArrayList<>(productos);
+    }
+    public interface OnAddToCartClickListener {
+        void onAddToCartClickListener(CestaProducto producto);
     }
 
 
