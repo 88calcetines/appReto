@@ -24,9 +24,11 @@ public class ConsolasViewModel extends ViewModel {
     private MutableLiveData<List<Producto>> mProductos;
     private MutableLiveData<String> message;
     public LiveData<String> toastMessage;
+    private MutableLiveData<Boolean> llamadaCorrecta;
     public ConsolasViewModel(){
         mProductos=new MutableLiveData<List<Producto>>();
         message=new MutableLiveData<String>();
+        llamadaCorrecta=new MutableLiveData<Boolean>();
         toastMessage=message;
     }
 
@@ -51,7 +53,12 @@ public class ConsolasViewModel extends ViewModel {
             public void onFailure(Call<List<Producto>> call, Throwable throwable) {
                 Log.d("respuesta", "llamada incorrecta");
                 message.postValue("No se han podido recuperar los datos");
+                llamadaCorrecta.postValue(false);
             }
         });
+    }
+
+    public MutableLiveData<Boolean> getLlamadaCorrecta() {
+        return llamadaCorrecta;
     }
 }

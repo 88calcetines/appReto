@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.dam2.appretoandroid.R;
@@ -31,6 +32,7 @@ public class DevicesFragment extends Fragment {
     public static final String ARG_OBJECT = "Devices";
     private RecyclerView rvProductos;
     private Context mContext;
+    private Button btnReload;
 
     public static DevicesFragment newInstance() {
         return new DevicesFragment();
@@ -48,6 +50,7 @@ public class DevicesFragment extends Fragment {
         mViewModel=new ViewModelProvider(this).get(DevicesViewModel.class);
         mViewModel.cargarProductos();
         rvProductos=view.findViewById(R.id.rvProductos);
+        btnReload=view.findViewById(R.id.btnReload);
         GridLayoutManager layoutManager=new GridLayoutManager(mContext,2);
         rvProductos.setLayoutManager(layoutManager);
         ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
@@ -59,6 +62,26 @@ public class DevicesFragment extends Fragment {
                 adapter.setProductos(productos);
                 adapter.notifyDataSetChanged();
                 view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+            }
+        });
+        mViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(!aBoolean)
+                {
+                    view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                    view.findViewById(R.id.btnReload).setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+        btnReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.cargarProductos();
+                view.findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.btnReload).setVisibility(View.INVISIBLE);
+
             }
         });
         mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {

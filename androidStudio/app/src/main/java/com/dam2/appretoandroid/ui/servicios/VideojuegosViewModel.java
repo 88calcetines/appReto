@@ -19,11 +19,13 @@ public class VideojuegosViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     private MutableLiveData<List<Producto>> mProductos;
     private MutableLiveData<String> message;
+    private MutableLiveData<Boolean> llamadaCorrecta;
     public LiveData<String> toastMessage;
 
     public VideojuegosViewModel(){
         mProductos=new MutableLiveData<List<Producto>>();
         message=new MutableLiveData<String>();
+        llamadaCorrecta=new MutableLiveData<Boolean>();
         toastMessage=message;
     }
 
@@ -41,14 +43,20 @@ public class VideojuegosViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
 
+
                 mProductos.postValue(response.body());
             }
 
             @Override
             public void onFailure(Call<List<Producto>> call, Throwable throwable) {
-                Log.d("respuesta", "llamada incorrecta");
+
                 message.postValue("No se han podido recuperar los datos");
+                llamadaCorrecta.postValue(false);
             }
         });
+    }
+
+    public MutableLiveData<Boolean> getLlamadaCorrecta() {
+        return llamadaCorrecta;
     }
 }

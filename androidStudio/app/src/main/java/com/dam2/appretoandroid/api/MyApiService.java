@@ -26,6 +26,7 @@ public interface MyApiService
 
 
     //register
-    //@POST("register")
+    //
+    // @POST("register")
 
 }
