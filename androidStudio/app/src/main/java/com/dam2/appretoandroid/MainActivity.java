@@ -1,11 +1,14 @@
 package com.dam2.appretoandroid;
 
 
+import android.Manifest;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.app.appsearch.SearchResults;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.se.omapi.Session;
 import android.util.Log;
@@ -17,12 +20,16 @@ import com.dam2.appretoandroid.api.SessionManager;
 import com.dam2.appretoandroid.modelo.Producto;
 import com.dam2.appretoandroid.ui.UserDialogFragment;
 import com.dam2.appretoandroid.ui.login.PerfilFragment;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -46,6 +53,10 @@ public class MainActivity extends AppCompatActivity  {
     private Menu menuG;
     private SessionManager sessionManager;
     private AppBarConfiguration appBarConfiguration;
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 100;
+    private boolean isPermisos = false;
+    private FusedLocationProviderClient fusedLocationClient;
+    private LocationCallback locationCallback;
 
 
     @Override
@@ -54,6 +65,7 @@ public class MainActivity extends AppCompatActivity  {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         sessionManager = new SessionManager(this);
+        fusedLocationClient= LocationServices.getFusedLocationProviderClient(this);
 
 
 
@@ -72,6 +84,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+         getCurrentLocation();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
@@ -121,14 +134,14 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Log.d("item",item.getItemId()+"");
+        /*Log.d("item",item.getItemId()+"");
         if(item.getItemId()==R.id.profile)
         {
             Log.d("d","hahiah");
             UserDialogFragment userDialogFragment=new UserDialogFragment();
 
             userDialogFragment.show(getSupportFragmentManager(),"User");
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -143,4 +156,52 @@ public class MainActivity extends AppCompatActivity  {
             super.onBackPressed();
         }
     }
+    private  void getCurrentLocation()
+    {
+        if(ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        )
+        {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    REQUEST_CODE_LOCATION_PERMISSION
+
+            );
+            return;
+        }
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if(location !=null)
+            {
+
+                //enviar locacion
+                Location coordenadas=location;
+                viewModel.cargarCordenadas(coordenadas);
+
+            }else
+            {
+
+            }
+        });
+    }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length> 0)
+        {
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                getCurrentLocation();
+            }else
+            {
+
+            }
+        }
+    }
+
 }

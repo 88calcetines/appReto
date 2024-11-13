@@ -1,6 +1,7 @@
 package com.dam2.appretoandroid;
 
 import android.app.Application;
+import android.location.Location;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,6 +21,7 @@ public class SharedViewModel extends AndroidViewModel {
     private CestaItemRepository cestaItemRepository;
     private LiveData<List<CestaProducto>> cartItems;
     private LiveData<Double> totalPrice;
+    private MutableLiveData<Location> locationLiveData;
     private final MutableLiveData<MenuItem> liveView = new MutableLiveData<>();
     public SharedViewModel(Application application)
     {
@@ -27,6 +29,7 @@ public class SharedViewModel extends AndroidViewModel {
         cestaItemRepository = new CestaItemRepository(application);
         cartItems= cestaItemRepository.getAllItems();
         totalPrice= cestaItemRepository.getPrecioTotal();
+        locationLiveData=new MutableLiveData<Location>();
 
     }
 
@@ -58,5 +61,17 @@ public class SharedViewModel extends AndroidViewModel {
     public LiveData<MenuItem> getMenuItem()
     {
         return liveView;
+    }
+
+    public MutableLiveData<Location> getLocationLiveData() {
+        return locationLiveData;
+    }
+
+    public void setLocationLiveData(MutableLiveData<Location> locationLiveData) {
+        this.locationLiveData = locationLiveData;
+    }
+    public void cargarCordenadas(Location location)
+    {
+        locationLiveData.postValue(location);
     }
 }

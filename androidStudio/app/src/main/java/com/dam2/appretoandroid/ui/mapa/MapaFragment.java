@@ -1,6 +1,7 @@
 package com.dam2.appretoandroid.ui.mapa;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.dam2.appretoandroid.R;
 import com.dam2.appretoandroid.SharedViewModel;
+import com.dam2.appretoandroid.api.SessionManager;
 import com.dam2.appretoandroid.databinding.FragmentMapaBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,12 +33,17 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private Context mContext;
     private GoogleMap gMap;
     private SharedViewModel sharedViewModel;
+    private Location mLocation;
+    private SessionManager sessionManager;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MapaViewModel mapaViewModel =
                 new ViewModelProvider(this).get(MapaViewModel.class);
+        sharedViewModel=new ViewModelProvider(this).get(SharedViewModel.class);
+        sessionManager=new SessionManager(mContext);
+
 
         binding = FragmentMapaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -44,7 +51,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         enableSearch(false);
 
 
-
+        sharedViewModel.getLocationLiveData().observe(getViewLifecycleOwner(), new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                mLocation=location;
+            }
+        });
         return root;
     }
 
@@ -77,6 +89,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         LatLng almi = new LatLng(43.27191482897626, -2.948676154282617);
+
+        if(mLocation!=null && sessionManager.fetchAuthToken().isEmpty())
+        {
+            almi =new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+        }
         gMap.addMarker(new MarkerOptions()
                 .position(almi)
                 .title("Almi"));

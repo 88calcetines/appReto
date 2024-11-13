@@ -27,18 +27,7 @@ public class SessionManager
         return prefs.getString(USER_TOKEN, null);  // Return null if no token exists
     }
 
-    public static synchronized SessionManager getInstance(Context context) {
-    if (instance == null) {
-        if (context != null) {
-            // Initialize with context if it's valid
-            instance = new SessionManager(context.getApplicationContext());
-        } else {
-            // Throw an exception if context is null (context must not be null)
-            throw new IllegalArgumentException("Context cannot be null");
-        }
-    }
-    return instance;
-}
+
 
 
 }

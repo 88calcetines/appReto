@@ -41,7 +41,7 @@ public class ServiciosFragment extends Fragment implements FragmentInterface {
         binding = FragmentServiciosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        enableSearch(true);
+        enableSearch(false);
         return root;
     }
 

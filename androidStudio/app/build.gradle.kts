@@ -87,6 +87,7 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
     implementation (libs.material.v130alpha01)
+    implementation (libs.play.services.location)
 
 
 
