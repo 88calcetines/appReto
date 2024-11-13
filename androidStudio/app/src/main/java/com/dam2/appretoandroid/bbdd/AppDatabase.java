@@ -14,7 +14,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.dam2.appretoandroid.modelo.CestaProducto;
 import com.dam2.appretoandroid.modelo.ImagenGaleria;
 
-@Database(entities = {ImagenGaleria.class, CestaProducto.class}, version = 2, exportSchema = false)
+@Database(entities = {ImagenGaleria.class, CestaProducto.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();

@@ -14,16 +14,15 @@ public class CestaProducto
     private int stock;
     private String descripcion;
     private String imagen;
-    private int tipo_producto;
     private double valoracion;
 
-    public CestaProducto(String nombre, float precio, int stock, String descripcion, String imagen, int tipo_producto, double valoracion) {
+    public CestaProducto(String nombre, float precio, int stock, String descripcion, String imagen, double valoracion) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
         this.descripcion = descripcion;
         this.imagen = imagen;
-        this.tipo_producto = tipo_producto;
+
         this.valoracion = valoracion;
 
 
@@ -77,13 +76,7 @@ public class CestaProducto
         this.imagen = imagen;
     }
 
-    public int getTipo_producto() {
-        return tipo_producto;
-    }
 
-    public void setTipo_producto(int tipo_producto) {
-        this.tipo_producto = tipo_producto;
-    }
 
     public double getValoracion() {
         return valoracion;

@@ -20,6 +20,7 @@ public class VideojuegosViewModel extends ViewModel {
     private MutableLiveData<List<Producto>> mProductosMejorValorados;
     private MutableLiveData<List<Producto>> mProductosRecientes;
     private MutableLiveData<List<Producto>> mProductosBaratos;
+    private MutableLiveData<List<Producto>> mProductos;
     private MutableLiveData<String> message;
     private MutableLiveData<Boolean> llamadaCorrecta;
     public LiveData<String> toastMessage;
@@ -29,7 +30,7 @@ public class VideojuegosViewModel extends ViewModel {
         mProductosMejorValorados=new MutableLiveData<List<Producto>>();
         mProductosRecientes=new MutableLiveData<List<Producto>>();
         mProductosBaratos=new MutableLiveData<List<Producto>>();
-
+        mProductos=new MutableLiveData<List<Producto>>();
         message=new MutableLiveData<String>();
         llamadaCorrecta=new MutableLiveData<Boolean>();
         toastMessage=message;
@@ -40,6 +41,9 @@ public class VideojuegosViewModel extends ViewModel {
         this.mProductosMejorValorados = mProductos;
     }
     public MutableLiveData<List<Producto>> getmProductos(){
+        return mProductos;
+    }
+    public MutableLiveData<List<Producto>> getmProductosMejorValorados(){
         return mProductosMejorValorados;
     }
 
@@ -53,8 +57,25 @@ public class VideojuegosViewModel extends ViewModel {
 
     public void cargarProductos()
     {
-        Call<List<Producto>> call= MyApiAdapter.getApiService().getProductosMejorValorados();
+        Call<List<Producto>> call= MyApiAdapter.getApiService().getProductosNombre(categoria);
         call.enqueue(new Callback<List<Producto>>() {
+            @Override
+            public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
+
+
+
+                mProductos.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Producto>> call, Throwable throwable) {
+
+                message.postValue("No se han podido recuperar los datos");
+                llamadaCorrecta.postValue(false);
+            }
+        });
+        Call<List<Producto>> callMejorValorados= MyApiAdapter.getApiService().getProductosMejorValorados();
+        callMejorValorados.enqueue(new Callback<List<Producto>>() {
             @Override
             public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
 
@@ -69,8 +90,8 @@ public class VideojuegosViewModel extends ViewModel {
                 llamadaCorrecta.postValue(false);
             }
         });
-        Call<List<Producto>> callValorados= MyApiAdapter.getApiService().getProductosMasBaratos(categoria);
-        callValorados.enqueue(new Callback<List<Producto>>() {
+        Call<List<Producto>> callBaratos= MyApiAdapter.getApiService().getProductosMasBaratos(categoria);
+        callBaratos.enqueue(new Callback<List<Producto>>() {
             @Override
             public void onResponse(Call<List<Producto>> call, Response<List<Producto>> response) {
                 mProductosBaratos.postValue(response.body());

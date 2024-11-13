@@ -10,22 +10,26 @@
     <TextView
         android:id="@+id/tvProducto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
         android:text="TextView"
         android:textAlignment="center" />
 
     <ImageView
         android:id="@+id/ivProducto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="3"
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -45,10 +49,11 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibBotonProducto"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="1"
         app:srcCompat="@drawable/baseline_shopping_cart_24"
         app:tint="@color/producto_selector" />
 

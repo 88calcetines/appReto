@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.servicios.CestaFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -30,22 +32,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="Eliminar" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="10">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCesta"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -61,7 +68,7 @@
             android:text="TextView" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnCompra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

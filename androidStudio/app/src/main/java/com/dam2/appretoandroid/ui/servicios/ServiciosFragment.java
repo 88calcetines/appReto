@@ -28,7 +28,7 @@ public class ServiciosFragment extends Fragment implements FragmentInterface {
 
     private FragmentServiciosBinding binding;
     private ViewPager2 viewPager;
-    private String[] nombreTab=new String[4];
+    private String[] nombreTab=new String[5];
     private ViewPagerAdapter viewPagerAdapter;
     private SharedViewModel sharedViewModel;
     private Cesta cesta;
@@ -48,10 +48,11 @@ public class ServiciosFragment extends Fragment implements FragmentInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        nombreTab[0]="Videojuegos";
-        nombreTab[1]="Consolas";
-        nombreTab[2]="Smartphones Tablets";
-        nombreTab[3]="Cesta";
+        nombreTab[0]="Main";
+        nombreTab[1]="Videojuegos";
+        nombreTab[2]="Consolas";
+        nombreTab[3]="Smartphones Tablets";
+        nombreTab[4]="Cesta";
         cesta=new Cesta();
 
         viewPager=view.findViewById(R.id.pager);
@@ -92,15 +93,20 @@ public class ServiciosFragment extends Fragment implements FragmentInterface {
         switch (position)
         {
             case 0:
+                enableSearch(false);
+                break;
 
             case 1:
 
-            case 2:
+                enableSearch(true);
+
+                break;
+            case 3:
                 enableSearch(true);
 
                 break;
 
-            case 3:
+            case 4:
                enableSearch(false);
                break;
 

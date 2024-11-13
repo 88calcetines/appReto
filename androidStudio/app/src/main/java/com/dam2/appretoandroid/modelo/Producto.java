@@ -10,7 +10,7 @@ public class Producto implements Serializable
     private int stock;
     private String descripcion;
     private String imagen;
-    private int tipo_producto;
+    private int tipoproducto;
     private double valoracion;
 
     public Producto(String descripcion, int id, String imagen, String nombre, float precio, int stock, int tipo_producto, double valoracion) {
@@ -20,7 +20,7 @@ public class Producto implements Serializable
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
-        this.tipo_producto = tipo_producto;
+        this.tipoproducto = tipo_producto;
         this.valoracion = valoracion;
     }
 
@@ -31,7 +31,7 @@ public class Producto implements Serializable
         this.nombre = "";
         this.precio = -1;
         this.stock = -1;
-        this.tipo_producto = -1;
+        this.tipoproducto = -1;
         this.valoracion = -1;
 
     }
@@ -61,7 +61,7 @@ public class Producto implements Serializable
     }
 
     public int getTipo_producto() {
-        return tipo_producto;
+        return tipoproducto;
     }
 
     public double getValoracion() {

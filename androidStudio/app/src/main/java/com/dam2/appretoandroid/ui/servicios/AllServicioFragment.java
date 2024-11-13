@@ -9,13 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,44 +27,38 @@ import com.dam2.appretoandroid.modelo.Producto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsolasFragment extends Fragment implements ProductosRecyclerViewAdapter.OnAddToCartClickListener{
+public class AllServicioFragment extends Fragment implements ProductosRecyclerViewAdapter.OnAddToCartClickListener {
 
-    private ConsolasViewModel mViewModel;
-    private VideojuegosViewModel sharedViewModel;
-    public static final String ARG_OBJECT = "Consolas";
-    private RecyclerView rvProductos;
+    private AllServicioViewModel mViewModel;
+    public static final String ARG_OBJECT = "Videojuegos";
     private Context mContext;
-    private Button btnReload;
     private SharedViewModel cestaViewModel;
+    private VideojuegosViewModel sharedViewModel;
+    private RecyclerView rvProductosMejorValorados;
+    private RecyclerView rvProductosRecientes;
+    private Button btnReload;
 
-    public static ConsolasFragment newInstance() {
-        return new ConsolasFragment();
+
+    public static AllServicioFragment newInstance() {
+        return new AllServicioFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_consolas, container, false);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.mContext=context;
+        return inflater.inflate(R.layout.fragment_all_servicio, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sharedViewModel=new ViewModelProvider(this).get(VideojuegosViewModel.class);
+        mViewModel=new ViewModelProvider(this).get(AllServicioViewModel.class);
+        sharedViewModel =new ViewModelProvider(this).get(VideojuegosViewModel.class);
         cestaViewModel =new ViewModelProvider(this).get(SharedViewModel.class);
-        sharedViewModel.setCategoria("Consolas");
-        btnReload=view.findViewById(R.id.btnReload);
         sharedViewModel.cargarProductos();
 
-        rvProductos=view.findViewById(R.id.rvProductos);
-        rvProductos.setLayoutManager(new GridLayoutManager(mContext,3));
+        rvProductosMejorValorados=view.findViewById(R.id.rvProductosMejorValorados);
+        rvProductosMejorValorados.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
         ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>(),
                 new ProductosRecyclerViewAdapter.OnAddToCartClickListener() {
                     @Override
@@ -75,10 +66,22 @@ public class ConsolasFragment extends Fragment implements ProductosRecyclerViewA
                         cestaViewModel.addItemToCart(producto);
                     }
                 });
-        rvProductos.setAdapter(adapter);
+        rvProductosMejorValorados.setAdapter(adapter);
 
+
+        rvProductosRecientes=view.findViewById(R.id.rvProductosRecientes);
+        rvProductosRecientes.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
+        ProductosRecyclerViewAdapter adapterRecientes= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>(),
+                new ProductosRecyclerViewAdapter.OnAddToCartClickListener() {
+                    @Override
+                    public void onAddToCartClickListener(CestaProducto producto) {
+
+                    }
+                });
+        rvProductosRecientes.setAdapter(adapter);
         btnReload=view.findViewById(R.id.btnReload);
-        sharedViewModel.getmProductos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+
+        sharedViewModel.getmProductosMejorValorados().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
             @Override
             public void onChanged(List<Producto> productos) {
 
@@ -95,6 +98,19 @@ public class ConsolasFragment extends Fragment implements ProductosRecyclerViewA
         });
 
 
+        sharedViewModel.getmProductosRecientes().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
+            @Override
+            public void onChanged(List<Producto> productos) {
+                if(!(productos ==null))
+                {
+                    adapterRecientes.setProductos(productos);
+                    adapterRecientes.notifyDataSetChanged();
+                }
+
+                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                view.findViewById(R.id.btnReload).setVisibility(View.INVISIBLE);
+            }
+        });
         sharedViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -117,12 +133,12 @@ public class ConsolasFragment extends Fragment implements ProductosRecyclerViewA
         });
 
 
+
     }
-
-
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.mContext=context;
     }
 
     @Override

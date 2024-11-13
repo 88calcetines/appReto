@@ -2,9 +2,11 @@ package com.dam2.appretoandroid.adapters;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,10 +35,11 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
     private OnAddToCartClickListener onAddToCartClickListener;
 
 
-    public ProductosRecyclerViewAdapter(Context mContext, FragmentManager fragmentManager, ArrayList<Producto> productos) {
+    public ProductosRecyclerViewAdapter(Context mContext, FragmentManager fragmentManager, ArrayList<Producto> productos, OnAddToCartClickListener listener) {
         this.mContext = mContext;
         this.fragmentManager = fragmentManager;
         this.productos = productos;
+        this.onAddToCartClickListener=listener;
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder
@@ -44,6 +47,7 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
         private final ImageView holderIv;
         private final TextView holderTv;
         private final TextView holderTvValoracion;
+        private final ImageButton holderIbCesta;
 
 
         public RecyclerViewHolder(@NonNull View itemView) {
@@ -51,9 +55,12 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
             holderIv=itemView.findViewById(R.id.ivProducto);
             holderTv= itemView.findViewById(R.id.tvProducto);
             holderTvValoracion=itemView.findViewById(R.id.tvValoracion);
+            holderIbCesta=itemView.findViewById(R.id.ibBotonProducto);
         }
         public ImageView getHolderIv(){return holderIv;}
         public TextView getHolderTv(){return holderTv;}
+        public TextView getHolderTvValoracion(){return holderTvValoracion;}
+        public ImageButton getHolderIbCesta(){return holderIbCesta;}
     }
 
     @NonNull
@@ -73,7 +80,7 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
 
         Producto producto=productos.get(position);
          CestaProducto cestaProducto=new CestaProducto(producto.getNombre(),producto.getPrecio(),
-                producto.getStock(),producto.getDescripcion(),producto.getImagen(),producto.getTipo_producto(),producto.getValoracion());
+                producto.getStock(),producto.getDescripcion(),producto.getImagen(),producto.getValoracion());
         try {
             String imagepath=producto.getImagen().substring("assets/".length());
             if (imagepath.startsWith("/")) {
@@ -94,9 +101,10 @@ public class ProductosRecyclerViewAdapter extends RecyclerView.Adapter<Productos
 
         holder.holderTv.setText(producto.getNombre());
         holder.holderTvValoracion.setText(producto.getValoracion()+"");
-        holder.holderIv.setOnClickListener(new View.OnClickListener() {
+        holder.holderIbCesta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("cesta Producto", cestaProducto+"");
                 onAddToCartClickListener.onAddToCartClickListener(cestaProducto);
             }
         });

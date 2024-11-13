@@ -33,9 +33,8 @@ public class VideojuegosFragment extends Fragment implements ProductosRecyclerVi
 
     private VideojuegosViewModel mViewModel;
     public static final String ARG_OBJECT = "Videojuegos";
-    private RecyclerView rvProductosMejorValorados;
-    private RecyclerView rvProductosBaratos;
-    private RecyclerView rvProductosRecientes;
+    private RecyclerView rvProductos;
+
     private SharedViewModel sharedViewModel;
 
     private Context mContext;
@@ -60,20 +59,18 @@ public class VideojuegosFragment extends Fragment implements ProductosRecyclerVi
         mViewModel.cargarProductos();
 
 
-        rvProductosMejorValorados=view.findViewById(R.id.rvProductosMejorValorados);
-        rvProductosMejorValorados.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
-        ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
-        rvProductosMejorValorados.setAdapter(adapter);
+        rvProductos=view.findViewById(R.id.rvProductos);
+        rvProductos.setLayoutManager(new GridLayoutManager(mContext,3));
+        ProductosRecyclerViewAdapter adapter= new ProductosRecyclerViewAdapter(mContext, getChildFragmentManager(), new ArrayList<>(),
+                new ProductosRecyclerViewAdapter.OnAddToCartClickListener() {
+                    @Override
+                    public void onAddToCartClickListener(CestaProducto producto) {
+                        sharedViewModel.addItemToCart(producto);
+                    }
+                });
+        rvProductos.setAdapter(adapter);
 
-        rvProductosBaratos=view.findViewById(R.id.rvProductosBaratos);
-        rvProductosBaratos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
-        ProductosRecyclerViewAdapter adapterBaratos= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
-        rvProductosBaratos.setAdapter(adapter);
 
-        rvProductosRecientes=view.findViewById(R.id.rvProductosRecientes);
-        rvProductosRecientes.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL,false));
-        ProductosRecyclerViewAdapter adapterRecientes= new ProductosRecyclerViewAdapter(mContext,getChildFragmentManager(),new ArrayList<>());
-        rvProductosRecientes.setAdapter(adapter);
 
 
         btnReload=view.findViewById(R.id.btnReload);
@@ -89,32 +86,11 @@ public class VideojuegosFragment extends Fragment implements ProductosRecyclerVi
                 }
 
                 view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                view.findViewById(R.id.btnReload).setVisibility(View.INVISIBLE);
             }
         });
-        mViewModel.getmProductosBaratos().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
-            @Override
-            public void onChanged(List<Producto> productos) {
-                if(!(productos ==null))
-                {
-                    adapterBaratos.setProductos(productos);
-                    adapterBaratos.notifyDataSetChanged();
-                }
 
-                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-            }
-        });
-        mViewModel.getmProductosRecientes().observe(getViewLifecycleOwner(), new Observer<List<Producto>>() {
-            @Override
-            public void onChanged(List<Producto> productos) {
-                if(!(productos ==null))
-                {
-                    adapterRecientes.setProductos(productos);
-                    adapterRecientes.notifyDataSetChanged();
-                }
 
-                view.findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-            }
-        });
         mViewModel.getLlamadaCorrecta().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -135,12 +111,7 @@ public class VideojuegosFragment extends Fragment implements ProductosRecyclerVi
 
             }
         });
-        mViewModel.toastMessage.observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
     }
 
@@ -152,6 +123,8 @@ public class VideojuegosFragment extends Fragment implements ProductosRecyclerVi
 
     @Override
     public void onAddToCartClickListener(CestaProducto producto) {
+        Log.d("cestaproducto", producto+"");
         sharedViewModel.addItemToCart(producto);
     }
+
 }

@@ -2,6 +2,7 @@ package com.dam2.appretoandroid.adapters;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,12 @@ public class CestaAdapter extends RecyclerView.Adapter<CestaAdapter.RecyclerView
     private OnRemoveFromCartClickListener onRemoveFromCartClickListener;
 
 
-    public CestaAdapter(Context mContext, FragmentManager fragmentManager, ArrayList<CestaProducto> productos) {
+    public CestaAdapter(Context mContext, FragmentManager fragmentManager, ArrayList<CestaProducto> productos,
+                        OnRemoveFromCartClickListener onRemoveFromCartClickListener) {
         this.mContext = mContext;
         this.fragmentManager = fragmentManager;
         this.cesta = productos;
+        this.onRemoveFromCartClickListener=onRemoveFromCartClickListener;
     }
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder
     {
@@ -53,6 +56,9 @@ public class CestaAdapter extends RecyclerView.Adapter<CestaAdapter.RecyclerView
             holderIb=itemView.findViewById(R.id.ibBotonProductoCesta);
 
         }
+        public ImageView getHolderIv(){return holderIv;}
+        public TextView getHolderTv(){return holderTv;}
+        public ImageButton getHolderIb(){return holderIb;}
     }
 
     @NonNull
@@ -70,8 +76,9 @@ public class CestaAdapter extends RecyclerView.Adapter<CestaAdapter.RecyclerView
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
 
+        Log.d("CestaAdapter", "Binding item at position: " + position);
         CestaProducto producto = cesta.get(position);
-        holder.holderTv.setText(producto.getNombre());
+        holder.holderTv.setText(producto.getPrecio()+"€");
         try {
             String imagepath=producto.getImagen().substring("assets/".length());
             if (imagepath.startsWith("/")) {
@@ -99,15 +106,26 @@ public class CestaAdapter extends RecyclerView.Adapter<CestaAdapter.RecyclerView
 
     @Override
     public int getItemCount() {
+
+        Log.d("CestaAdapter", "get item count,Item count: " + cesta.size());  // Log the item count
         return cesta.size();
     }
     public void updateItems(List<CestaProducto> productos) {
-        setCesta(productos);
-        notifyDataSetChanged(); // Notify the adapter that the data has changed
+        if (cesta == null) {
+            cesta = new ArrayList<>();
+        }
+
+        if (cesta.size() != productos.size() || !cesta.containsAll(productos)) {
+            cesta.clear();  // Clear the old data
+            setCesta(productos);
+            Log.d("CestaAdapter", "Notifying data set changed, new size: " + cesta.size());// Add the new data
+            notifyDataSetChanged();  // Notify RecyclerView that data has changed
+        }
     }
 
     public void setCesta(List<CestaProducto> productos)
     {
+        ;  // Log the item count
         this.cesta=new ArrayList<>(productos);
     }
 
