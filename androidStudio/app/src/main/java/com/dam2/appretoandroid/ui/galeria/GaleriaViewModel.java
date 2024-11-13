@@ -17,9 +17,11 @@ import java.util.List;
 public class GaleriaViewModel extends ViewModel {
 
     private MutableLiveData<List<ImagenGaleria>> mImagenesGaleria;
+    private MutableLiveData<Boolean> imagenesExistentes;
 
     public GaleriaViewModel() {
         mImagenesGaleria= new MutableLiveData<>();
+        imagenesExistentes=new MutableLiveData<>();
 
     }
     public void setmImagenesGaleria(MutableLiveData<List<ImagenGaleria>> imagenesGaleria)
@@ -33,10 +35,18 @@ public class GaleriaViewModel extends ViewModel {
         mDb.imagenesGaleriaDao().loadImagenes().observe(owner, new Observer<List<ImagenGaleria>>() {
             @Override
             public void onChanged(List<ImagenGaleria> imagenGalerias) {
-                mImagenesGaleria.postValue(imagenGalerias);
+                if(imagenGalerias.isEmpty())
+                {
+                    imagenesExistentes.postValue(false);
+                }else{
+                    mImagenesGaleria.postValue(imagenGalerias);
+                }
+
             }
         });
     }
+
+
 
     public void rellenarImagenesExterior(Context context)
     {
@@ -63,4 +73,8 @@ public class GaleriaViewModel extends ViewModel {
     }
 
     public LiveData<List<ImagenGaleria>> getImagenes(){return mImagenesGaleria;}
+
+    public MutableLiveData<Boolean> getImagenesExistentes() {
+        return imagenesExistentes;
+    }
 }

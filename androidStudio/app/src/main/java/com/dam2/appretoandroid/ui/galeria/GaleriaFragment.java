@@ -62,10 +62,20 @@ public class GaleriaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         enableSearch(false);
         galeriaViewModel=new ViewModelProvider(this).get(GaleriaViewModel.class);
-        galeriaViewModel.rellenarImagenesExterior(mContext);
+
         grd_galeria=view.findViewById(R.id.grd_galeria);
         GaleriaAdapter galeriaAdapter = new GaleriaAdapter(mContext, new ArrayList<ImagenGaleria>(), getChildFragmentManager());
         grd_galeria.setAdapter(galeriaAdapter);
+
+        galeriaViewModel.getImagenesExistentes().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(!aBoolean)
+                {
+                    galeriaViewModel.rellenarImagenesExterior(mContext);
+                }
+            }
+        });
         galeriaViewModel.getImagenes().observe(getViewLifecycleOwner(), new Observer<List<ImagenGaleria>>() {
             @Override
             public void onChanged(List<ImagenGaleria> imagenGalerias) {

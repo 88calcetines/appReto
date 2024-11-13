@@ -23,7 +23,9 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/productos_mejor_valorados" />
+                    android:background="#3669C7"
+                    android:text="@string/productos_mejor_valorados"
+                    android:textColor="#0006B1" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProductosMejorValorados"
@@ -39,7 +41,9 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/productos_mas_recientes" />
+                    android:background="#3669C7"
+                    android:text="@string/productos_mas_recientes"
+                    android:textColor="#0006B1" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvProductosRecientes"

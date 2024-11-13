@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -129,5 +130,17 @@ public class MainActivity extends AppCompatActivity  {
             userDialogFragment.show(getSupportFragmentManager(),"User");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+
+        // If the NavController has a fragment in the back stack, pop it
+        if (!navController.popBackStack()) {
+            // If the back stack is empty, call the default onBackPressed
+            super.onBackPressed();
+        }
     }
 }

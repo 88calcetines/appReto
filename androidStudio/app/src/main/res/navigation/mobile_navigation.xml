@@ -33,8 +33,8 @@
         android:label="@string/title_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_fragmentlogin_to_fragmentservicio"
-            app:destination="@+id/navigation_servicios"
+            android:id="@+id/action_fragmentlogin_to_fragmentperfil"
+            app:destination="@+id/navigation_perfil"
             />
     </fragment>
     <fragment

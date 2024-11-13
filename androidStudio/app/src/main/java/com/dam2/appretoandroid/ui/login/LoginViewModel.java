@@ -13,6 +13,7 @@ import com.dam2.appretoandroid.api.MyApiAdapter;
 import com.dam2.appretoandroid.api.SessionManager;
 import com.dam2.appretoandroid.modelo.LoginRequest;
 import com.dam2.appretoandroid.modelo.LoginResponse;
+import com.dam2.appretoandroid.modelo.Usuario;
 
 
 import retrofit2.Call;
@@ -60,5 +61,21 @@ public class LoginViewModel extends ViewModel {
             }
         });
 
+    }
+
+    public void registro(LifecycleOwner owner , Context context, Usuario usuario)
+    {
+        Call<Void> call= MyApiAdapter.getApiService().registro(usuario);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+
+            }
+        });
     }
 }

@@ -105,7 +105,11 @@ public class CestaFragment extends Fragment implements CestaAdapter.OnRemoveFrom
             @Override
             public void onChanged(Double aDouble) {
                 DecimalFormat numberFormat = new DecimalFormat("#.00");
-                tvPrecioTotal.setText(numberFormat.format(aDouble)+ "€");
+                if(!(aDouble ==null))
+                {
+                    tvPrecioTotal.setText(numberFormat.format(aDouble)+ "€");
+                }
+
             }
         });
         btnCompra.setOnClickListener(new View.OnClickListener() {

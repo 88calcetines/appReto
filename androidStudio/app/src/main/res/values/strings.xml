@@ -39,4 +39,6 @@
     <string name="productos_mas_recientes">Productos mas Recientes</string>
     <string name="productos_mas_baratos">Productos mas Baratos</string>
     <string name="procesando_la_compra">Procesando la compra...</string>
+    <string name="bienvenido">Bienvenido,</string>
+    <string name="blank">Blank</string>
 </resources>

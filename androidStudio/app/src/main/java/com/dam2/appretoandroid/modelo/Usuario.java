@@ -7,18 +7,17 @@ public class Usuario
     private String apellido1;
     private String apellido2;
     private String email;
-    private String contrasena;
+    private String password;
     private String imagen;
-    private String localizacion;
 
-    public Usuario(String apellido1, String apellido2, String contrasena, String email, int id, String imagen, String localizacion, String nombre) {
+
+    public Usuario(String apellido1, String apellido2, String contrasena, String email, int id, String imagen, String nombre) {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
-        this.contrasena = contrasena;
+        this.password = contrasena;
         this.email = email;
         this.id = id;
         this.imagen = imagen;
-        this.localizacion = localizacion;
         this.nombre = nombre;
     }
 
@@ -26,11 +25,10 @@ public class Usuario
     {
         this.apellido1 = "";
         this.apellido2 = "";
-        this.contrasena = "";
+        this.password = "";
         this.email = "";
         this.id = -1;
         this.imagen = "";
-        this.localizacion = "";
         this.nombre = "";
     }
 
@@ -59,11 +57,11 @@ public class Usuario
     }
 
     public String getContrasena() {
-        return contrasena;
+        return password;
     }
 
     public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+        this.password = contrasena;
     }
 
     public String getEmail() {
@@ -82,13 +80,7 @@ public class Usuario
         this.imagen = imagen;
     }
 
-    public String getLocalizacion() {
-        return localizacion;
-    }
 
-    public void setLocalizacion(String localizacion) {
-        this.localizacion = localizacion;
-    }
 
     public String getNombre() {
         return nombre;

@@ -3,6 +3,7 @@ package com.dam2.appretoandroid.api;
 import com.dam2.appretoandroid.modelo.LoginRequest;
 import com.dam2.appretoandroid.modelo.LoginResponse;
 import com.dam2.appretoandroid.modelo.Producto;
+import com.dam2.appretoandroid.modelo.Usuario;
 
 import java.util.List;
 
@@ -32,6 +33,12 @@ public interface MyApiService
 
     @GET("productosRecientes")
     Call<List<Producto>> getProductosRecientes();
+
+    @GET("miperfil")
+    Call<Usuario> getMiPerfil();
+
+    @POST("register")
+    Call<Void> registro(@Body Usuario usuario);
 
 
 
