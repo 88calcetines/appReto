@@ -1,5 +1,7 @@
 {
   "name": "appReto",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -85,18 +85,20 @@ export class AuthService {
     const decodedToken: any = jwtDecode(token);
     console.log('Token decodificado:', decodedToken);
     const user = {
-      email: decodedToken.username // Almacena el correo electrónico en el campo email
+      email: decodedToken.username
     };
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSubject.next(user);
     this.getPerfil().subscribe({
       next: (perfil) => {
+        console.log('Perfil recibido:', perfil);
         if (perfil) {
           const updatedUser = {
             ...user,
             nombre: perfil.nombre,
             apellido1: perfil.apellido1,
-            apellido2: perfil.apellido2
+            apellido2: perfil.apellido2,
+            imagen: perfil.imagen
           };
           localStorage.setItem('user', JSON.stringify(updatedUser));
           this.currentUserSubject.next(updatedUser);
@@ -116,10 +118,11 @@ export class AuthService {
         nombre: parsedUser.nombre,
         apellido1: parsedUser.apellido1,
         apellido2: parsedUser.apellido2,
-        email: parsedUser.email
+        email: parsedUser.email,
+        imagen: parsedUser.imagen
       }
     }
-    return user ? JSON.parse(user) : null;
+    return null;
   }
 
   getPerfil(): Observable<any> {
