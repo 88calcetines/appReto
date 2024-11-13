@@ -26,7 +26,7 @@ export class RegisterPage {
       this.authService.register(this.registerForm.value).subscribe(
         response => {
           console.log('Registro exitoso', response);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/tabs/login']);
         },
         error => {
           console.error('Error en el registro', error);

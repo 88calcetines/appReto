@@ -10,7 +10,7 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  imagen: string | undefined;
+  imagen: string | null = null;
   user: any;
   nombre: string | undefined;
   email: string | undefined;
@@ -25,7 +25,7 @@ export class PerfilPage implements OnInit {
 
 loadUser() {
   this.user = this.authService.getCurrentUser();
-  console.log('Usuario cargado:', this.user);  // Asegúrate de que el usuario es correcto.
+  console.log('Usuario cargado:', this.user);
   if (this.user) {
     this.nombre = this.user.nombre;
     this.email = this.user.email;
@@ -39,6 +39,43 @@ loadUser() {
     console.error('No user found');
     this.router.navigate(['/tabs/login']);
   }
+}
+
+
+async tomarFoto() {
+  const photo = await Camera.getPhoto({
+    resultType: CameraResultType.DataUrl,
+    source: CameraSource.Camera,
+    quality: 90,
+  });
+
+  if (photo?.dataUrl) {
+    this.imagen = photo.dataUrl;
+
+    const formData = new FormData();
+    formData.append('foto', this.dataUrlToBlob(photo.dataUrl), 'perfil.jpg');
+
+    const userId = 1; // Cambia esto por el ID real del usuario
+    this.serviciosService.updateFoto(userId, formData).subscribe(
+      (response) => {
+        console.log('Foto actualizada:', response);
+      },
+      (error) => {
+        console.error('Error al actualizar la foto:', error);
+      }
+    );
+  }
+}
+
+private dataUrlToBlob(dataUrl: string): Blob {
+  const byteString = atob(dataUrl.split(',')[1]);
+  const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([ab], { type: mimeString });
 }
 
   

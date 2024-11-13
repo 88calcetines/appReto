@@ -35,4 +35,17 @@ export class ServiciosService {
     return this.http.get<any[]>(this.apiAlmi + 'productosRecientes');
   }
 
+// Método para actualizar la foto de perfil
+actualizarFotoPerfil(userId: number, formData: FormData) {
+  const url = `${this.apiAlmi}miperfil/${userId}/foto`;
+  return this.http.post(url, formData).toPromise();
+}
+
+// Otros métodos que necesiten la URL base de `apiAlmi`
+// Ejemplo de otro método:
+obtenerPerfil(userId: number) {
+  const url = `${this.apiAlmi}miperfil/${userId}`;
+  return this.http.get(url).toPromise();
+}
+
 }

@@ -48,7 +48,6 @@ export class Tab1TopPage implements OnInit {
       buttons: ['OK'],
       cssClass: 'success-alert',
     });
-  
     await alert.present();
   }
 

@@ -14,7 +14,12 @@
 
         <div *ngIf="user">
           <h1>Bienvenido, {{ nombre }}</h1>
-          <img *ngIf="imagen" [src]="imagen" alt="Foto de perfil">
+<!-- Foto de perfil y botón para abrir la cámara -->
+<img *ngIf="imagen" [src]="imagen" alt="Foto de perfil">
+<ion-button expand="block" (click)="tomarFoto()">Cambiar Foto de Perfil</ion-button>
+
+
+          <!--<img *ngIf="imagen" [src]="imagen" alt="Foto de perfil">-->
           <!-- Otros contenidos del perfil -->
         </div>
         <div *ngIf="!user">
