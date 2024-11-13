@@ -115,6 +115,7 @@ export class AuthService {
     if(user) {
       const parsedUser = JSON.parse(user);
       return {
+        id: parsedUser.id,
         nombre: parsedUser.nombre,
         apellido1: parsedUser.apellido1,
         apellido2: parsedUser.apellido2,
@@ -124,6 +125,8 @@ export class AuthService {
     }
     return null;
   }
+
+  
 
   getPerfil(): Observable<any> {
     const token = this.getToken();
@@ -135,5 +138,6 @@ export class AuthService {
       })
     );
   }
+  
   
 }

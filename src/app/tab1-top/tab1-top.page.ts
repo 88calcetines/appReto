@@ -38,6 +38,11 @@ export class Tab1TopPage implements OnInit {
   }
 
   async agregarACesta(producto: any) {
+    if (!producto.id) {
+      console.error('Product ID is undefined for producto:', producto);
+      return;
+    }
+
     this.cestaService.addItem(producto);
     console.log('Producto añadido a la cesta:', producto);
     this.actualizarCantidadProductos();
@@ -46,7 +51,6 @@ export class Tab1TopPage implements OnInit {
       subHeader: 'Producto añadido a la cesta',
       message: 'El producto se ha añadido correctamente a tu cesta de compras.',
       buttons: ['OK'],
-      cssClass: 'success-alert',
     });
     await alert.present();
   }

@@ -31,6 +31,7 @@ export class ServiciosService {
     return this.http.post<any>(`${this.apiAlmi}/usuarios/${userId}/foto`, formData);
   }
   
+  
   productosRecientes(): Observable<any[]> {
     return this.http.get<any[]>(this.apiAlmi + 'productosRecientes');
   }
@@ -45,8 +46,13 @@ export class ServiciosService {
     return this.http.get(url).toPromise();
   }
 
-  actualizarStock(productId: number, cantidad: number): Observable<any> {
-    return this.http.put<any>(`${this.apiAlmi}/productos/${productId}/stock`, { cantidad });
+  actualizarStock(productId: number, stock: number): Observable<any> {
+    return this.http.get<any>(`${this.apiAlmi}actualizarStock/${productId}/stock/${stock}`);
   }
 
+  getUserLocation(userId: number): Observable<{ lat: number, lng: number }> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<{ lat: number, lng: number }>(`${this.apiAlmi}user/${userId}/location`, { headers });
+  }
 }

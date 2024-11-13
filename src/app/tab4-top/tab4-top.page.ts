@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CestaService } from '../service/cesta.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ServiciosService } from '../service/servicios.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-tab4-top',
@@ -51,7 +52,7 @@ export class Tab4TopPage implements OnInit {
 
   async comprar() {
     let alertOptions;
-  
+
     if (this.items.length === 0) {
       alertOptions = {
         header: 'Error',
@@ -77,21 +78,24 @@ export class Tab4TopPage implements OnInit {
               });
               await loading.present();
 
-              for(const item of this.items) {
-                await this.serviciosService.actualizarStock(item.id, -1).toPromise();
+              for (const item of this.items) {
+                if (item.id) {
+                  await lastValueFrom(this.serviciosService.actualizarStock(item.id, item.stock - 1));
+                } else {
+                  console.error('Product ID is undefined for item:', item);
+                }
               }
-  
-                loading.dismiss();
-                this.cestaService.clearCesta();
-                this.loadItems();
-                this.actualizarCantidadProductos();
-  
-                const successAlert = await this.alertController.create({
-                  header: 'Compra exitosa',
-                  message: 'Su compra se ha realizado con éxito.',
-                  buttons: ['OK'],
-                });
-                await successAlert.present();
+              loading.dismiss();
+              this.cestaService.clearCesta();
+              this.loadItems();
+              this.actualizarCantidadProductos();
+
+              const successAlert = await this.alertController.create({
+                header: 'Compra exitosa',
+                message: 'Su compra se ha realizado con éxito.',
+                buttons: ['OK'],
+              });
+              await successAlert.present();
             }
           }
         ],

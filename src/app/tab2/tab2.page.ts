@@ -8,7 +8,7 @@ import { ServiciosService } from '../service/servicios.service';
   styleUrls: ['./tab2.page.scss'],
 })
 export class Tab2Page implements OnInit {
-  center: google.maps.LatLngLiteral = { lat: 43.27192290021221, lng: -2.948695787239455 };  // Coordenadas iniciales
+  center: google.maps.LatLngLiteral ={ lat: 43.246246885490976, lng: -2.892240076465803};  //{ lat: 43.27192290021221, lng: -2.948695787239455 };  // Coordenadas iniciales
   zoom = 15;  // Nivel de zoom
   markerOptions: google.maps.MarkerOptions = { position: this.center, title: 'Almi Bilbao' };
 
