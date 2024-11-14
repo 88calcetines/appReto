@@ -88,9 +88,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         this.gMap=googleMap;
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng almi = new LatLng(43.27191482897626, -2.948676154282617);
+        LatLng almi = new LatLng(43.26407363220316, -2.9233381905269074);
 
-        if(mLocation!=null && sessionManager.fetchAuthToken().isEmpty())
+        String token =sessionManager.fetchAuthToken();
+        if(mLocation!=null && token!=null)
         {
             almi =new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         }
@@ -111,5 +112,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onMapReady(gMap);
     }
 }

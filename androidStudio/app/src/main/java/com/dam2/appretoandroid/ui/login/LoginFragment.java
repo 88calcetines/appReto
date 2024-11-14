@@ -1,5 +1,6 @@
 package com.dam2.appretoandroid.ui.login;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -84,6 +85,20 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        mViewModel.getRegistroCorrecto().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean)
+                {
+                    Toast.makeText(mContext, "Registro correcto", Toast.LENGTH_SHORT).show();
+
+
+                }else {
+                    Toast.makeText(mContext, "Registro incorrecto", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     private void enableSearch(boolean state) {
@@ -158,7 +173,7 @@ public class LoginFragment extends Fragment {
                 usuario.setApellido1(etApellido.getText().toString());
                 usuario.setNombre(etNombre.getText().toString());
                 usuario.setApellido2(etApellido2.getText().toString());
-                usuario.setImagen("/assets\\/images\\/default-avatar.png");
+                usuario.setImagen(	"/assets/images/default-avatar.png");
                 mViewModel.registro(getViewLifecycleOwner(), mContext, usuario);
             } else {
                 Toast.makeText(mContext, "Introduce email y contraseña", Toast.LENGTH_SHORT).show();

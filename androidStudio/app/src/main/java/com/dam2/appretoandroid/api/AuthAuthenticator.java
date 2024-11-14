@@ -26,13 +26,13 @@ public class AuthAuthenticator implements Authenticator {
         if(response.request().header("Authorization") == null)
         {
             String authToken = "";
-            if(!getAuthToken().isEmpty())
+            /*if(!getAuthToken().isEmpty())
             {
                 authToken=getAuthToken();
                 return response.request().newBuilder()
                         .header("Authorization", "Bearer " + authToken)
                         .build();
-            }
+            }*/
 
 
 
@@ -40,7 +40,7 @@ public class AuthAuthenticator implements Authenticator {
         return response.request();
     }
 
-    private String getAuthToken()
+    /*private String getAuthToken()
     {
         String token="";
 
@@ -50,7 +50,7 @@ public class AuthAuthenticator implements Authenticator {
         }
         return  token;
 
-    }
+    }*/
 
 
 
