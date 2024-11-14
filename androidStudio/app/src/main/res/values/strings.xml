@@ -3,4 +3,42 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_servicios">Servicios</string>
+    <string name="title_mapa">Mapa</string>
+    <string name="title_galeria">Galeria</string>
+    <string name="title_historia">Historia</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_login">Login</string>
+    <string name="historia_1">En el corazón de Bilbao, JuegAlmi ha sido el refugio de los amantes
+        de los videojuegos desde su apertura hace más de una década.
+        Fundada por un grupo de apasionados del gaming, la tienda comenzó como un pequeño local dedicado a la venta
+        y alquiler de videojuegos. Con el paso del tiempo, la demanda creció y, con ella, la necesidad de diversificar sus servicios.
+        Hoy en día, JuegAlmi no solo ofrece videojuegos, sino también la venta y reparación de consolas, tabletas y smartphones, convirtiéndose
+        en un verdadero centro de entretenimiento y tecnología.
+
+
+    </string>
+    <string name="historia_2">Sin embargo, con el incremento de clientes y el auge del comercio digital,
+        la tienda se dio cuenta de que era fundamental modernizar su imagen y mejorar su gestión.
+        Así, nació el reto de desarrollar una aplicación móvil que no solo sirviera como un escaparate de los productos disponibles,
+        sino que también mejorara la experiencia de sus clientes.
+    </string>
+    <string name="historia_3">
+        La idea detrás de la aplicación JuegAlmi es simple pero ambiciosa:
+        crear una plataforma accesible y eficiente donde los usuarios puedan explorar el catálogo de videojuegos,
+        consultar los dispositivos en venta, gestionar reparaciones y disfrutar de una experiencia de compra sin igual.
+        El objetivo es facilitar la interacción del cliente con la tienda,
+        permitiendo que realicen compras y alquileres desde la comodidad de su hogar.
+
+    </string>
+    <string name="perfil">Perfil</string>
+    <string name="reload">Reload</string>
+    <string name="productos_mejor_valorados">Productos Mejor Valorados</string>
+    <string name="productos_mas_recientes">Productos mas Recientes</string>
+    <string name="productos_mas_baratos">Productos mas Baratos</string>
+    <string name="procesando_la_compra">Procesando la compra...</string>
+    <string name="bienvenido">Bienvenido,</string>
+    <string name="blank">Blank</string>
 </resources>

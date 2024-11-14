@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.AppRetoAndroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryVariant">@color/maindark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -11,6 +11,21 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowSplashScreenBackground">@color/maindark</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/icon</item>
+
+
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="RoundedSquare">
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="cardView">
+        <item name="android:background">@drawable/login_gradient</item>
     </style>
 </resources>

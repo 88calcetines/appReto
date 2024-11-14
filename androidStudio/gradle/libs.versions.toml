@@ -1,28 +1,76 @@
 [versions]
-agp = "8.6.0"
+agp = "8.6.1"
+appcompatV7 = "28.0.0"
+converterGson = "2.6.4"
+coreSplashscreen = "1.0.1"
+gson = "2.11.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+loggingInterceptor = "4.9.3"
 material = "1.12.0"
 constraintlayout = "2.1.4"
 lifecycleLivedataKtx = "2.8.6"
 lifecycleViewmodelKtx = "2.8.6"
+materialVersion = "1.3.0-alpha01"
 navigationFragment = "2.8.3"
 navigationUi = "2.8.3"
+legacySupportV4 = "1.0.0"
+picasso = "2.8"
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.0.0"
+retrofit = "2.11.0"
+roomRuntime = "2.6.1"
+secretsGradlePlugin = "2.0.1"
+viewpager2 = "1.1.0"
+volley = "1.2.1"
+kotlin = "1.9.0"
+lifecycleRuntimeKtx = "2.8.6"
+activityCompose = "1.9.2"
+composeBom = "2024.04.01"
+activity = "1.9.2"
 
 [libraries]
+appcompat-v7 = { module = "com.android.support:appcompat-v7", version.ref = "appcompatV7" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+material-v130alpha01 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
+volley = { module = "com.android.volley:volley", version.ref = "volley" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+material3 = { group = "androidx.compose.material3", name = "material3" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
