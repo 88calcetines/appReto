@@ -23,9 +23,12 @@ import retrofit2.Response;
 public class LoginViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     private MutableLiveData<Boolean> loginCorrecto;
+    private MutableLiveData<Boolean> registroCorrecto;
 
     public LoginViewModel() {
+
         this.loginCorrecto = new MutableLiveData<Boolean>();
+        this.registroCorrecto = new MutableLiveData<Boolean>();
     }
 
     public MutableLiveData<Boolean> getLoginCorrecto() {
@@ -44,8 +47,9 @@ public class LoginViewModel extends ViewModel {
                     // Get the response body
                     LoginResponse loginResponse = response.body();
 
-                    sessionManager.saveAuthToken(loginResponse.getAuthToken());
+
                     if(!loginResponse.getAuthToken().isEmpty()){
+                        sessionManager.saveAuthToken(loginResponse.getAuthToken());
                         loginCorrecto.postValue(true);
                     }
 
@@ -56,6 +60,13 @@ public class LoginViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable throwable) {
+
+                Log.e("login", "Login failed: " + (throwable != null ? throwable.toString() : "Unknown error"));
+
+                // Optionally, you can add additional logging or exception handling here
+                if (throwable != null) {
+                    throwable.printStackTrace(); // Prints the stack trace for debugging
+                }
                 Log.d("login", "incorrecto");
                 loginCorrecto.postValue(false);
             }
@@ -69,13 +80,17 @@ public class LoginViewModel extends ViewModel {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
+                registroCorrecto.postValue(true);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
-
+                registroCorrecto.postValue(false);
             }
         });
+    }
+
+    public MutableLiveData<Boolean> getRegistroCorrecto() {
+        return registroCorrecto;
     }
 }

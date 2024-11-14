@@ -51,7 +51,7 @@ public class ServiciosFragment extends Fragment implements FragmentInterface {
         nombreTab[0]="Main";
         nombreTab[1]="Videojuegos";
         nombreTab[2]="Consolas";
-        nombreTab[3]="Smartphones Tablets";
+        nombreTab[3]="Telefonia";
         nombreTab[4]="Cesta";
         cesta=new Cesta();
 

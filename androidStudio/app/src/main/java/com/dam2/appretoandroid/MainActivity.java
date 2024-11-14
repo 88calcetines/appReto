@@ -127,8 +127,7 @@ public class MainActivity extends AppCompatActivity  {
 
         ComponentName component= new ComponentName(this, SearchResults.class);
 
-        SearchableInfo searchableInfo=searchManager.getSearchableInfo(component);
-        searchView.setSearchableInfo(searchableInfo);
+
         return true;
     }
 
