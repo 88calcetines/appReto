@@ -27,6 +27,14 @@ public class SessionManager
         return prefs.getString(USER_TOKEN, null);  // Return null if no token exists
     }
 
+    public void deleteAuthToken()
+    {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(USER_TOKEN);
+        editor.apply();
+    }
+
+
 
 
 
